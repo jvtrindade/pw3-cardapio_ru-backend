@@ -5,7 +5,7 @@ CREATE TABLE itens (
     id int AUTO_INCREMENT NOT NULL,
     descricao VARCHAR (120) NOT NULL,
     primary key(id)
-); /*Foreign key para os ingredientes*/
+);
 CREATE TABLE ingredientes (
     id int AUTO_INCREMENT NOT NULL,
     descricao VARCHAR(120) NOT NULL,
