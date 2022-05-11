@@ -1,7 +1,7 @@
 <?php
 
     try{
-        $database =new PDO("mysql:host=localhost;dbname=RU", "root", "");
+        $database = new PDO("mysql:host=localhost;dbname=RU", "root", "");
         $itens = [];
         $ingredientes = [];
         $cardapios = [];
