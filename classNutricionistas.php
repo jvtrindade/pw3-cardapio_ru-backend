@@ -1,6 +1,6 @@
 <?php
 
-    class Nutricionistas{
+    class Nutricionista{
         private $crn;
         private $nome = "";
 
@@ -9,6 +9,27 @@
                 "crn" => $this->id,
                 "nome" => $this->nome,
             ]);
+        }
+
+        static function findbyPk($crn){
+            $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE crn=:crn");
+            $consulta->execute([":crn" => $crn]);
+            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Nutricionista');
+            return $consulta->fetch();
+        }
+
+        function setCRN($valor){
+            $this->crn = $valor;
+        }
+        function getCRN(){
+            return $this->crn;
+        }
+        function setNome($valor){
+            $this->nome = $valor;
+        }
+        function getNome($valor){
+            return $this->nome;
         }
 
         function inserir(){
@@ -28,7 +49,7 @@
         function alterar(){
             try{
                 $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-                $consulta = $database->prepare("UPDATE pessoas SET crn = :crn, nome = :nome");
+                $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome");
                 $consulta->execute([
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
@@ -42,7 +63,7 @@
         function remover(){
             try{
                 $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-                $consulta = $database->prepare("DELETE FROM pessoas where crn = :crn");
+                $consulta = $database->prepare("DELETE FROM nutricionistas where crn = :crn");
                 $consulta->execute([":crn" => $this->crn]);
             }
             catch(PDOException $e){
