@@ -6,7 +6,7 @@
 
         function __toString(){
             return json_encode([
-                "crn" => $this->id,
+                "crn" => $this->crn,
                 "nome" => $this->nome,
             ]);
         }
