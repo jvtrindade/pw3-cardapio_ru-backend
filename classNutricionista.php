@@ -49,7 +49,7 @@
         function alterar(){
             try{
                 $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-                $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome");
+                $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
