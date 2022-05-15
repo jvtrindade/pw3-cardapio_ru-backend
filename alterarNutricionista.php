@@ -2,7 +2,7 @@
 
     require "classNutricionista.php";
 
-    $crn = $_GET["crn"];
+    $crn = $_GET["crn"]; //ver se não é pelo POST
 
     $n = Nutricionista::findbyPk($crn); //perguntar pro Professor o que significa os ::
     if(!$p){
