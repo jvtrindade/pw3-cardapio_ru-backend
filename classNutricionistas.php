@@ -41,13 +41,14 @@
 
         function remover(){
             try{
-                $database = new PDO("");
+                $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+                $consulta = $database->prepare("DELETE FROM pessoas where crn = :crn");
+                $consulta->execute([":crn" => $this->crn]);
             }
             catch(PDOException $e){
                 die($e->getMessage());
             }
         }
-
     }
 
 ?>
