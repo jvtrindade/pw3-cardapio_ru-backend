@@ -4,6 +4,27 @@ class Itens {
     private $id;
     private $descricao = "";
 
+    function __toString(){
+        return json_encode([
+            "descricao" => $this->descricao,
+        ]);
+    }
+
+    static function findbyPk($id){
+        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
+        $consulta->execute([":id" => $crn]);
+        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
+        return $consulta->fetch();
+    }
+
+    function setDescricao($valor){
+        $this->descricao = $valor;
+    }
+    function getDescricao(){
+        return $this->descricao;
+    }
+
 
 function inserirItens(){
         try {

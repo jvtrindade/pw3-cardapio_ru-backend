@@ -5,6 +5,34 @@ class Ingrediente {
     private $descricao = "";
     private $calorias = "";
 
+    function __toString(){
+        return json_encode([
+            "descricao" => $this->descricao,
+            "calorias" => $this->calorias,
+        ]);
+    }
+
+    static function findbyPk($id){
+        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
+        $consulta->execute([":id" => $crn]);
+        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingrediente');
+        return $consulta->fetch();
+    }
+
+    function setDescricao($valor){
+        $this->descricao = $valor;
+    }
+    function getDescricao(){
+        return $this->descricao;
+    }
+    function setCalorias($valor){
+        $this->calorias = $valor;
+    }
+    function getCalorias($valor){
+        return $this->calorias;
+    }
+
 
 function inserirIngredientes(){
         try {
