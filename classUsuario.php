@@ -2,9 +2,9 @@
 
     class Usuario{
         private $id;
-        private $nome;
-        private $email;
-        private $senha;
+        private $nome = "";
+        private $email = "";
+        private $senha = "";
 
         function __toString(){
             return json_encode([

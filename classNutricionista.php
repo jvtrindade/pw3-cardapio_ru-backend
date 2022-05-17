@@ -1,7 +1,7 @@
 <?php
 
     class Nutricionista{
-        private $crn;
+        private $crn = "";
         private $nome = "";
 
         function __toString(){
