@@ -7,15 +7,15 @@
     $consulta = $database->prepare("SELECT * FROM usuarios WHERE email=:email and senha =:senha LIMIT 1");
     $consulta->execute([":email" => $usuario, ':senha' => $senha]);
     $consulta->setFetchMode(PDO::FETCH_CLASS, "Usuario");
-    die(var_dump($consulta->fetch()));
+    $consulta->fetch();
 
-    // foreach($database->prepare("SELECT * FROM usuarios WHERE email = ? and senha =  ?") as $dados){
-    //     if ($usuario == $dados["email"] && $senha == $dados["senha"]){
-    //         header("Location: ../privado/index.php");
-    //     }
-    //     else{
-    //         die("Usuário ou Senha incorretos");
-    //     }
-    // }
+    foreach($database->prepare("SELECT * FROM usuarios WHERE email = :email and senha =  :senha LIMIT 1") as $dados){
+        if ($usuario == $dados["email"] && $senha == $dados["senha"]){
+            header("Location: ../frontend/privado/index.php");
+        }
+        else{
+            die("Usuário ou Senha incorretos");
+        }
+    }
 
 ?>
