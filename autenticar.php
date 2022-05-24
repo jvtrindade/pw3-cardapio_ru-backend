@@ -26,5 +26,14 @@
     $consulta->execute([":email" => $usuario, ':senha' => $senha]);
     $consulta->setFetchMode(PDO::FETCH_CLASS, "Usuario");
     die(var_dump($consulta->fetch()));
+    foreach ($consulta as $c){
+        if ($usuario == $c["email"] && $senha == $c["senha"]){
+            session_start();
+            header("Location: ../frontend/privado/index.php");
+        }
+        else{
+            die("Usuário ou Senha incorretos");
+        }
+    }
 
 ?>
