@@ -18,6 +18,8 @@
         }
     }*/
 
+    if(session_start() == false){
+
     $usuario = $_POST["email"];
     $senha = $_POST["senha"];
     $database = new PDO("mysql:localhost=host;dbname=ru", "aluno", "aluno");
@@ -28,11 +30,16 @@
     $dados = $consulta->fetch();
     if($dados != false){
         session_start();
-        header("Location: ../frontend/privado/index.html");
+        header("Location: autenticar.php");
     }
     else{
         header("HTTP/1.0 404 Not Found");
         die("Usuário não encontrado!");
+    }
+    }
+
+    else{
+        header("Location: ../frontend/privado/index.html");
     }
 
 ?>
