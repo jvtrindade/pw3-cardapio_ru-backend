@@ -1,6 +1,6 @@
 <?php
 
-    if(session_status() !== PHP_SESSION_NONE){
+    if(session_status() === PHP_SESSION_NONE){
         $usuario = $_POST["email"];
         $senha = $_POST["senha"];
         $database = new PDO("mysql:localhost=host;dbname=ru", "aluno", "aluno");
@@ -15,7 +15,7 @@
         }
         else{
             header("HTTP/1.0 404 Not Found");
-            die("Usuário não encontrado!");
+            die("Usuário não encontrado!"); //header voltar
         }
     }
     else{
