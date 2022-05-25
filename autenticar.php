@@ -41,7 +41,7 @@
         }
 
         $jwt = JWT::encode($dados, $key, 'HS256');
-        print json_encode(['token' => "Bearer ${jwt}", 'usuario' => ['name' => $dados['name']]]);
+        print json_encode(['token' => "Bearer ${jwt}", 'usuario' => ['name' => $dados['nome']]]);
     } catch(Exception $e){
         die(json_encode(['error' => $e->getMessage()]));
     }
