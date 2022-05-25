@@ -15,11 +15,11 @@
             header("Location: autenticar.php");
         }
         else{
-            header("Location: ../frontend/publico/index.html");
+            header("Location: ../frontend/publico/index.php");
         }
     }
     else{
-        header ("Location: ../frontend/privado/index.html");
+        header ("Location: ../frontend/privado/index.php");
     }
 
 ?>
