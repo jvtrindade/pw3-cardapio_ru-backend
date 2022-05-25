@@ -15,7 +15,7 @@ class Ingrediente {
     static function findbyPk($id){
         $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
-        $consulta->execute([":id" => $crn]);
+        $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingrediente');
         return $consulta->fetch();
     }
