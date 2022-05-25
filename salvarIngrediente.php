@@ -1,5 +1,5 @@
 <?php
-require "lib/class.Ingredientes.php";
+require "class.Ingredientes.php";
 
 try {
     $p = new Ingrediente();

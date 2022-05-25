@@ -1,5 +1,5 @@
 <?php
-require "lib/classCardapio.php";
+require "classCardapio.php";
 
 try {
     $p = new Cardapio();
