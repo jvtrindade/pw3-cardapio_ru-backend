@@ -7,7 +7,7 @@ $itn = Itens::findbyPk($id);
 if (!$itn){
     throw new Exception ("Item não encontrado!");
 }
-$itn->remover();
+$itn->removerItens();
 print $itn;
 
 ?>

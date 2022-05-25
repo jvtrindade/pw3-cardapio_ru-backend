@@ -7,7 +7,7 @@ $ing = Ingrediente::findbyPk($id);
 if (!$ing){
     throw new Exception ("Ingrediente não encontrado!");
 }
-$ing->remover();
+$ing->removerIngredientes();
 print $ing;
 
 ?>

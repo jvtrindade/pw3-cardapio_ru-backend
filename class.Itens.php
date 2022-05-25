@@ -13,7 +13,7 @@ class Itens {
     static function findbyPk($id){
         $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
-        $consulta->execute([":id" => $crn]);
+        $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
         return $consulta->fetch();
     }
@@ -26,7 +26,7 @@ class Itens {
     }
 
 
-function inserirItens(){
+function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES(:descricaos)");
