@@ -30,7 +30,7 @@
     $senha = $_POST['senha'];
     try {
         
-        $consulta = $database->prepare("SELECT * FROM usuarios WHERE email=:email and senha =:senha");
+        $consulta = $database->prepare("SELECT id, nome FROM usuarios WHERE email=:email and senha =:senha");
         $consulta->execute([":email" => $usuario, ':senha' => $senha]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, "Usuario");
         $dados = $consulta->fetch();
@@ -38,12 +38,9 @@
         if ($dados === false){
             throw new Exception("Dados inválidos!");
         }
-        $usuario = [
-            'id' => 1,
-            'name' => 'Thyago Salvá'
-        ];
-        $jwt = JWT::encode($usuario, $key, 'HS256');
-        print json_encode(['token' => "Bearer ${jwt}", 'usuario' => ['name' => $usuario['name']]]);
+
+        $jwt = JWT::encode($dados, $key, 'HS256');
+        print json_encode(['token' => "Bearer ${jwt}", 'usuario' => ['name' => $dados['name']]]);
     } catch(Exception $e){
         die(json_encode(['error' => $e->getMessage()]));
     }
