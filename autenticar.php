@@ -28,6 +28,7 @@
     use Firebase\JWT\Key;
     $usuario = $_POST['email'];
     $senha = $_POST['senha'];
+    $database = new PDO("mysql:localhost=host;dbname=ru", "aluno", "aluno");
     try {
         
         $consulta = $database->prepare("SELECT id, nome FROM usuarios WHERE email=:email and senha =:senha");
