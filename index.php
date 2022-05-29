@@ -35,7 +35,7 @@
             $cardapios[] = [
                 "id" => $cardapio["id"],
                 "dia" => $cardapio["dia"],
-                "tipo" => $cardapio["tipo"]
+                "tipo" => $cardapio["tipo"] // ver se tem um if pros números
             ];
         }
         foreach($database->query("SELECT * FROM nutricionistas") as $nutricionista){
@@ -44,7 +44,7 @@
                 "nome" => $nutricionista["nome"]
             ];
         }
-        foreach($database->query("SELECT * FROM usuarios") as $usuario){
+        foreach($database->query("SELECT * FROM usuarios") as $usuario){ //acho q não precisa
             $usuarios [] = [
                 "id" => $usuarios["id"],
                 "nome" => $usuarios["nome"],
