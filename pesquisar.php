@@ -7,8 +7,11 @@
     $consultaItem = $database->prepare("SELECT * FROM itens WHERE descricao=:descricao");
     $consultaItem = $database->execute([":descricao" => $item]);
     $consultaData = $database->prepare("SELECT * FROM cardapio WHERE dia=:dia");
-    $consultaItem = $database->execute([":dia" => $dia]);
-    $consultaRefeicao = $database->prepare("SELECT  FROM cardapio WHERE tipo=:refeicao");
-    $consultaItem = $database->execute([":refeicao" => $refeicao]);
+    $consultaData = $database->execute([":dia" => $dia]);
+    $consultaRefeicao = $database->prepare("SELECT * FROM cardapio WHERE tipo=:refeicao");
+    $consultaRefeicao = $database->execute([":refeicao" => $refeicao]);
+
+    print json_encode($consulta)
+
 
 ?>
