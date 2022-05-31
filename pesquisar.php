@@ -1,29 +1,51 @@
 <?php
 
-    $refeicao = //$_POST["refeicao"];
-    $dia = //$_POST["data"];
-    $item = "Tapioca"; //$_POST["item"];
+    $refeicao = "almoco";//$_POST["refeicao"];
+    $dia = null;//$_POST["data"];
+    $item = "Feijão"; //$_POST["item"];
+    
     $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
-    $consultaItem = $database->prepare("SELECT descricao FROM itens WHERE descricao=:descricao");
-    $consultaItem->execute([":descricao" => $item]);
-    $consultaItem;//tem q fazer o fetch
-    $dadoItem = $consultaItem->fetch();
 
-    $consultaData = $database->prepare("SELECT dia FROM cardapio WHERE dia=:dia");
-    $consultaData->execute([":dia" => $dia]);
-    $consultaData;//fetch
-    $dadoData = $consultaData->fetch();
 
-    $consultaRefeicao = $database->prepare("SELECT tipo FROM cardapio WHERE tipo=:refeicao");
-    $consultaRefeicao->execute([":refeicao" => $refeicao]);
-    $consultaRefeicao;//fetch
-    $dadoRefeicao = $consultaRefeicao->fetch();
+    $busca = [];
+    $ex = [];
+    if (isset ($item)) {
+        $busca[] = 'descricao=:descricao';
+        $ex[':descricao'] =  $item;
+    }
 
-    var_dump($consultaRefeicao);
+    if (isset($dia)){
+        $busca[] = 'dia=:dia';
+        $ex[':dia'] =  $dia;
+    }
 
-    print json_encode($dadoItem);
-    print json_encode($dadoData);
-    print json_encode($dadoRefeicao);
+    if (isset($refeicao)){
+        $busca[] = 'tipo=:refeicao';
+        $ex[':refeicao'] =  $refeicao;
+    }
+
+    $str = implode(" and ", $busca);
+
+
+    $consulta = $database->prepare("SELECT descricao FROM itens WHERE {$str}");
+    $consulta->execute($ex);
+    $dados = $consulta->fetchAll(PDO::FETCH_ASSOC);
+
+    // $consultaData = $database->prepare("SELECT dia FROM cardapio WHERE dia=:dia");
+    // $consultaData->execute([":dia" => $dia]);
+    // $consultaData;//
+    // $dadoData = $consultaData->fetchAll(PDO::FETCH_ASSOC);
+
+    // $consultaRefeicao = $database->prepare("SELECT tipo FROM cardapio WHERE tipo=:refeicao");
+    // $consultaRefeicao->execute([":refeicao" => $refeicao]);
+    // $consultaRefeicao;//fetch
+    // $dadoRefeicao = $consultaRefeicao->fetch();
+
+    var_dump($dados);
+
+    // print json_encode($dadoItem);
+    // print json_encode($dadoData);
+    // print json_encode($dadoRefeicao);
 
 
 ?>
