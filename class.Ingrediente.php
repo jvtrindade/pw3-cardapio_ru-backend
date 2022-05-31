@@ -13,7 +13,7 @@ class Ingrediente {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingrediente');
@@ -36,7 +36,7 @@ class Ingrediente {
 
 function inserirIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("INSERT INTO ingredientes(descricao, calorias) VALUES(:descricao,:calorias)");
             $consulta->execute([
                 ':descricao' => $this->descricao,
@@ -55,7 +55,7 @@ function inserirIngredientes(){
 
     function alterarIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=pw3", "aluno", "aluno");
             $consulta = $db->prepare("UPDATE intredientes SET descricao = :descricao, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -69,7 +69,7 @@ function inserirIngredientes(){
 
     function removerIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
