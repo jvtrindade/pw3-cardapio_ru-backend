@@ -11,6 +11,6 @@ if(!$p){
 $ing->setId($_POST["id"]);
 $ing->setDescricao($_POST["descricao"]);
 $ing->alterar();
-print $n;
+print $ing;
 
 ?>

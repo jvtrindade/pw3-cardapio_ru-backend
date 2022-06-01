@@ -12,6 +12,6 @@ $car->setId($_POST["id"]);
 $car->setDia($_POST["dia"]);
 $car->setTipo($_POST["tipo"]);
 $car->alterar();
-print $n;
+print $car;
 
 ?>

@@ -11,6 +11,6 @@ if(!$p){
 $itn->setId($_POST["id"]);
 $itn->setDescricao($_POST["descricao"]);
 $itn->alterar();
-print $n;
+print $itn;
 
 ?>
