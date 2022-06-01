@@ -1,6 +1,6 @@
 <?php
 
-require "classIngrediente.php";
+require "class.Ingrediente.php";
 
 $id = $_GET["id"];
 
@@ -8,9 +8,9 @@ $ing = Ingrediente::findbyPk($id);
 if(!$p){
     throw new Exception("Ingrediente não encontrado!");
 }
-$n->setId($_POST["id"]);
-$n->setDescricao($_POST["descricao"]);
-$n->alterar();
+$ing->setId($_POST["id"]);
+$ing->setDescricao($_POST["descricao"]);
+$ing->alterar();
 print $n;
 
 ?>
