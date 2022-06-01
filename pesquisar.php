@@ -1,8 +1,8 @@
 <?php
 
-    $refeicao = "almoco";//$_POST["refeicao"];
+    $refeicao = null;//$_POST["refeicao"];
     $dia = null;//$_POST["data"];
-    $item = "Feijão"; //$_POST["item"];
+    $item = "Arroz Branco"; //$_POST["item"];
     
     $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
 
@@ -29,6 +29,9 @@
 
     $consulta = $database->prepare("SELECT descricao FROM itens WHERE {$str}");
     $consulta->execute($ex);
+
+    var_dump($consulta);
+
     $dados = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
     // $consultaData = $database->prepare("SELECT dia FROM cardapio WHERE dia=:dia");
