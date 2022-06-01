@@ -1,5 +1,5 @@
 <?php
-require "class.Ingredientes.php";
+require "class.Ingrediente.php";
 var_dump($_POST);
 die;
 try {
