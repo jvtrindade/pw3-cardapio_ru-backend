@@ -2,7 +2,7 @@
 require "class.Itens.php";
 
 try {
-    foreach($database->query("SELECT * FROM itens") as $itens){
+    /*foreach($database->query("SELECT * FROM itens") as $itens){
         $itens[] = [
             "id" => $itens["id"],
             "descricao" => $itens["descricao"],
@@ -10,7 +10,7 @@ try {
         if ($_POST["descricao"] = $itens["descricao"]){
             print json_encode("Item já cadastrado");
         }
-    }
+    }*/
     $itn = new Itens();
     $itn->setDescricao($_POST['descricao']);
     $itn->inserir();
