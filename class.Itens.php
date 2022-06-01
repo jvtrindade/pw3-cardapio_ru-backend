@@ -29,7 +29,7 @@ class Itens {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
-            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES(:descricaos)");
+            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES(:descricao)");
             $consulta->execute([
                 ':descricao' => $this->descricao
             ]);
