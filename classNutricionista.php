@@ -28,7 +28,7 @@
         function setNome($valor){
             $this->nome = $valor;
         }
-        function getNome($valor){
+        function getNome(){
             return $this->nome;
         }
 

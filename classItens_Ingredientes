@@ -1,0 +1,70 @@
+<?php
+
+require "class.Itens.php";
+
+class Itens_Ingredientes : Itens{
+    private $id_item;
+    private $id_ingrediente = "";
+
+    /*static function findbyPk($id){
+        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
+        $consulta->execute([":id" => $id]);
+        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
+        return $consulta->fetch();
+    }*/
+
+    function setId_Item($valor){
+        $this->id_item = $valor;
+    }
+    function getId_Item(){
+        return $this->id_item;
+    }
+    function setId_Ingrediente($valor){
+        $this->id_ingrediente;
+    }
+    function getId_Ingrediente(){
+        return $this->id_ingrediente;
+    }
+
+
+function inserir(){
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) VALUES (:id_item, :id_ingrediente)");
+            $consulta->execute([
+                ':id_item' => $this->id_item,
+                'id_ingrediente' => $this->id_ingrediente
+            ]);
+
+        }catch(PDOException $e){
+            throw new Exception("Ocorreu um erro interno!");
+            
+        }
+    }
+
+    function alterarItens_Ingredientes(){ //preciso ver o WHERE
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $consulta = $db->prepare("UPDATE itens_ingredientes SET id_item = :id_item, id_ingrediente = :id_ingrediente WHERE id= :id");
+            $consulta->execute([
+                ':id_item' => $this->id_item,
+                ':id_ingredientes' => $this->id_ingrediente
+            ]);
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
+    }
+
+    function removerItens_Ingredientes(){ //preciso ver o WHERE
+        try {
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id= :id");
+            $consulta->execute([':id' => $this->id]);
+        }catch(PDOException $e){
+            die($e->getMessage());
+        }
+    }
+}
+    
+    ?>

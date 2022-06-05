@@ -29,7 +29,7 @@ class Itens {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES(:descricao)");
+            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
             $consulta->execute([
                 ':descricao' => $this->descricao
             ]);
@@ -46,7 +46,7 @@ function inserir(){
 
     function alterarItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,

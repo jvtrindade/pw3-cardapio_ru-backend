@@ -36,7 +36,7 @@ class Ingredientes {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("INSERT INTO itens (descricao, caloruas) VALUES(:descricao, :calorias)");
+            $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao, :calorias)");
             $consulta->execute([
                 ':descricao' => $this->descricao,
                 ':calorias' => $this->calorias
@@ -54,7 +54,7 @@ function inserir(){
 
     function alterarIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("UPDATE ingredientes SET descricao = :descricao, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
