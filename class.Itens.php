@@ -26,7 +26,7 @@ class Itens {
     }
 
 
-function inserirItens(){
+function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");

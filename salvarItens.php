@@ -1,6 +1,6 @@
 <?php
 require "class.Itens.php";
-require "classItens_Ingredientes";
+//require "classItens_Ingredientes";
 
 try {
     /*foreach($database->query("SELECT * FROM itens") as $itens){
@@ -17,7 +17,7 @@ try {
     }*/
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
-    $itn->inserirItens();
+    $itn->inserir();
     print $itn;
     //$itn_igr = new Itens_Ingredientes();
     //$itn_igr->setId_Item($this->id);
