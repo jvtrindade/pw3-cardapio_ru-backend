@@ -2,7 +2,7 @@
 require "class.Ingrediente.php";
 
 try {
-    foreach($database->query("SELECT * FROM ingredientes") as $ingrediente){
+    /*foreach($database->query("SELECT * FROM ingredientes") as $ingrediente){
         $ingredientes[] = [
             "id" => $ingrediente["id"],
             "descricao" => $ingrediente["descricao"],
@@ -11,7 +11,7 @@ try {
         if ($_POST["descricao"] = $ingredientes["descricao"]){
             print json_encode("Ingrediente já cadastrado");
         }
-    }
+    }*/
     $ing = new Ingrediente();
     $ing->setDescricao($_POST['descricao']);
     $ing->setCalorias($_POST['calorias']);
