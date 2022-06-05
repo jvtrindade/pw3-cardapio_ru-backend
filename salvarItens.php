@@ -17,12 +17,12 @@ try {
     }*/
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
-    $itn->inserir();
+    $itn->inserirItens();
     print $itn;
     $itn_igr = new Itens_Ingredientes();
-    $itn_igr->setId_Item($_POST['id']);
-    $itn_igr->setId_Ingrediente($_POST['id_ingrediente']); // arrumar o POST
-    $itn_igr->inserir();
+    $itn_igr->setId_Item($this->id);
+    $itn_igr->setId_Ingredientes($this->id_ingrediente);
+    $itn_igr->inserirItens_Ingredientes();
 }catch(Exception $e){
     print json_encode([
         "error" => true,

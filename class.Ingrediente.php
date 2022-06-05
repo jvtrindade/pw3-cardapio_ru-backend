@@ -2,12 +2,12 @@
 
 class Ingredientes {
     private $id;
-    private $descricao = "";
+    private $descricao_ingrediente = "";
     private $calorias = "";
 
     function __toString(){
         return json_encode([
-            "descricao" => $this->descricao,
+            "descricao_ingrediente" => $this->descricao_ingrediente,
         ]);
     }
 
@@ -19,11 +19,11 @@ class Ingredientes {
         return $consulta->fetch();
     }
 
-    function setDescricao($valor){
-        $this->descricao = $valor;
+    function setdescricao_ingrediente($valor){
+        $this->descricao_ingrediente = $valor;
     }
-    function getDescricao(){
-        return $this->descricao;
+    function getdescricao_ingrediente(){
+        return $this->descricao_ingrediente;
     }
     function setCalorias($valor){
         $this->calorias = $valor;
@@ -36,9 +36,9 @@ class Ingredientes {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao, :calorias)");
+            $consulta = $db->prepare("INSERT INTO ingredientes (descricao_ingrediente, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
-                ':descricao' => $this->descricao,
+                ':descricao_ingrediente' => $this->descricao_ingrediente,
                 ':calorias' => $this->calorias
             ]);
             $consulta = $db->prepare("SELECT id FROM ingredientes ORDER BY id DESC LIMIT 1");
@@ -55,10 +55,10 @@ function inserir(){
     function alterarIngredientes(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("UPDATE ingredientes SET descricao = :descricao, calorias = :calorias WHERE id= :id");
+            $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
-                ':descricao' => $this->descricao,
+                ':descricao_ingrediente' => $this->descricao_ingrediente,
                 ':calorias' => $this->calorias
             ]);
         }catch(PDOException $e){

@@ -1,8 +1,8 @@
 <?php
 
 class Itens {
-    private $id;
-    private $descricao = "";
+    protected $id;
+    protected $descricao = "";
 
     function __toString(){
         return json_encode([
@@ -26,7 +26,7 @@ class Itens {
     }
 
 
-function inserir(){
+function inserirItens(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
