@@ -13,7 +13,7 @@ try {
         }
     }*/
     $ing = new Ingrediente();
-    $ing->setDescricao($_POST['descricao']);
+    $ing->setDescricao($_POST['ingrediente']);
     $ing->setCalorias($_POST['calorias']);
     $ing->inserirIngredientes();
     print $ing;
