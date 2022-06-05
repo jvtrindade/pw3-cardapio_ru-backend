@@ -1,6 +1,6 @@
 <?php
-require "class.Itens.php";
-die("Oi");
+/*require "class.Itens.php";
+
 try {
     foreach($database->query("SELECT * FROM itens") as $itens){
         $item[] = [
@@ -24,4 +24,4 @@ try {
     ]);
 }
 
-?>
+?>*/
