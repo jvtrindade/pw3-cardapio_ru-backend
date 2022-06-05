@@ -7,9 +7,12 @@ try {
             "id" => $itens["id"],
             "descricao" => $itens["descricao"],
         ];
-        if ($_POST["descricao"] = $itens["descricao"]){
-            print json_encode("Item já cadastrado");
+        foreach ($itens as $itn){
+            if ($_POST["descricao"] = $itens["descricao"]){
+                print json_encode("Item já cadastrado");
+            }
         }
+        
     }
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
