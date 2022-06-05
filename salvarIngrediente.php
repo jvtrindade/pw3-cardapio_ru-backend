@@ -1,7 +1,6 @@
 <?php
 require "class.Ingrediente.php";
-var_dump($_POST);
-die;
+
 try {
     foreach($database->query("SELECT * FROM ingredientes") as $ingrediente){
         $ingredientes[] = [
