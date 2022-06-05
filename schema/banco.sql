@@ -45,4 +45,13 @@ CREATE TABLE usuarios (
     email varchar(200) NOT NULL,
     senha varchar (80) NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE refeicao (
+    dia_cardapio DATE NOT NULL,
+    tipo_cardapio int NOT NULL,
+    descricao_itens varchar NOT NULL,
+    FOREIGN KEY (dia_cardapio) REFERENCES cardapios(dia),
+    FOREIGN KEY (tipo_cardapio) REFERENCES cardapios(tipo),
+    FOREIGN KEY (descricao_itens) REFERENCES itens(descricao)
 )
