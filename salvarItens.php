@@ -3,11 +3,10 @@ require "class.Itens.php";
 
 try {
     foreach($database->query("SELECT * FROM itens") as $itens){
-        $itens[] = [
-            "id" => $itens["id"],
+        $item[] = [
             "descricao" => $itens["descricao"],
         ];
-        foreach ($itens as $itn){
+        foreach ($item as $itm){
             if ($_POST["descricao"] == $itens["descricao"]){
                 print json_encode("Item já cadastrado");
             }
