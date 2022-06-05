@@ -1,6 +1,6 @@
 <?php
 
-    require "classNutricionista.php";
+    require "classRefeicao.php";
 
     try{
         $r = new Refeicao();

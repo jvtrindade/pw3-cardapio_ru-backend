@@ -14,7 +14,7 @@
         function inserir(){
             try{
                 $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-                $consulta = $database->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome");
+                $consulta = $database->prepare("INSERT INTO refeicao(dia, refeicao, item) VALUES (:crn, :nome"); // tem que arrumar
                 $consulta->execute([
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
