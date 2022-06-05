@@ -12,7 +12,7 @@ try {
         }
     }*/
     $itn = new Itens();
-    $itn->setDescricao($_POST['descricao']);
+    $itn->setDescricao($_POST['item']);
     $itn->inserir();
     print $itn;
 }catch(Exception $e){

@@ -1,7 +1,7 @@
 <?php // precisa de vários foreach ou só um?
 
     try{
-        $database =new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+        $database =new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $itens = [];
         $ingredientes = [];
         $cardapios = [];

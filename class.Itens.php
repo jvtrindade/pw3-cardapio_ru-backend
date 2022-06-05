@@ -11,7 +11,7 @@ class Itens {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
@@ -28,7 +28,7 @@ class Itens {
 
 function inserir(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES(:descricao)");
             $consulta->execute([
                 ':descricao' => $this->descricao
@@ -46,7 +46,7 @@ function inserir(){
 
     function alterarItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -59,7 +59,7 @@ function inserir(){
 
     function removerItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("DELETE FROM itens WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
