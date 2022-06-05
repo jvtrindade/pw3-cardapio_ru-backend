@@ -1,6 +1,6 @@
 <?php
 
-class Ingrediente {
+class Ingredientes {
     private $id;
     private $descricao = "";
     private $calorias = "";
@@ -8,7 +8,6 @@ class Ingrediente {
     function __toString(){
         return json_encode([
             "descricao" => $this->descricao,
-            "calorias" => $this->calorias,
         ]);
     }
 
@@ -16,7 +15,7 @@ class Ingrediente {
         $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
         $consulta->execute([":id" => $id]);
-        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingrediente');
+        $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingredientes');
         return $consulta->fetch();
     }
 
@@ -29,15 +28,15 @@ class Ingrediente {
     function setCalorias($valor){
         $this->calorias = $valor;
     }
-    function getCalorias($valor){
+    function getCalorias(){
         return $this->calorias;
     }
 
 
-function inserirIngredientes(){
+function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("INSERT INTO ingredientes(descricao, calorias) VALUES(:descricao,:calorias)");
+            $consulta = $db->prepare("INSERT INTO itens (descricao, caloruas) VALUES(:descricao, :calorias)");
             $consulta->execute([
                 ':descricao' => $this->descricao,
                 ':calorias' => $this->calorias
@@ -56,7 +55,7 @@ function inserirIngredientes(){
     function alterarIngredientes(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
-            $consulta = $db->prepare("UPDATE intredientes SET descricao = :descricao, calorias = :calorias WHERE id= :id");
+            $consulta = $db->prepare("UPDATE ingredientes SET descricao = :descricao, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
                 ':descricao' => $this->descricao,

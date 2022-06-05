@@ -12,10 +12,10 @@ try {
             print json_encode("Ingrediente já cadastrado");
         }
     }*/
-    $ing = new Ingrediente();
+    $ing = new Ingredientes();
     $ing->setDescricao($_POST['ingrediente']);
     $ing->setCalorias($_POST['calorias']);
-    $ing->inserirIngredientes();
+    $ing->inserir();
     print $ing;
 }catch(Exception $e){
     print json_encode([

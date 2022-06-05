@@ -2,7 +2,7 @@
 require "class.Itens.php";
 
 try {
-    foreach($database->query("SELECT * FROM itens") as $itens){
+    /*foreach($database->query("SELECT * FROM itens") as $itens){
         $item[] = [
             "descricao" => $itens["descricao"],
         ];
@@ -13,7 +13,7 @@ try {
             }
         }
         
-    }
+    }*/
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
     $itn->inserir();
