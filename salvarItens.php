@@ -19,10 +19,11 @@ try {
     $itn->setDescricao($_POST['item']);
     $itn->inserirItens();
     print $itn;
-    $itn_igr = new Itens_Ingredientes();
-    $itn_igr->setId_Item($this->id);
-    $itn_igr->setId_Ingredientes($this->id_ingrediente);
-    $itn_igr->inserirItens_Ingredientes();
+    //$itn_igr = new Itens_Ingredientes();
+    //$itn_igr->setId_Item($this->id);
+    //$itn_igr->setId_Ingredientes($this->id_ingrediente);
+    //$itn_igr->inserirItens_Ingredientes();
+    //print $itn_igr;
 }catch(Exception $e){
     print json_encode([
         "error" => true,

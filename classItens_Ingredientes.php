@@ -1,7 +1,7 @@
 <?php
 
-require "class.Itens.php";
-require "class.Ingrediente.php";
+//require "class.Itens.php";
+//require "class.Ingrediente.php";
 
 class Itens_Ingredientes extends Itens{
     private $id_item;
