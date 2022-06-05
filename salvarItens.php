@@ -1,5 +1,5 @@
 <?php
-/*require "class.Itens.php";
+require "class.Itens.php";
 
 try {
     foreach($database->query("SELECT * FROM itens") as $itens){
@@ -24,4 +24,4 @@ try {
     ]);
 }
 
-?>*/
+?>
