@@ -7,7 +7,7 @@ try {
             "descricao" => $itens["descricao"],
         ];
         foreach ($item as $itm){
-            if ($_POST["descricao"] == $itens["descricao"]){
+            if ($_POST["descricao"] == $item["descricao"]){
                 print json_encode("Item já cadastrado");
             }
         }
