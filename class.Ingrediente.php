@@ -1,7 +1,7 @@
 <?php
 
 class Ingredientes {
-    private $id;
+    private $id_ingrediente;
     private $descricao_ingrediente = "";
     private $calorias = "";
 
@@ -44,7 +44,7 @@ function inserir(){
             $consulta = $db->prepare("SELECT id FROM ingredientes ORDER BY id DESC LIMIT 1");
             $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
-            $this->id = $data['id'];
+            $this->id_ingrediente = $data['id'];
 
         }catch(PDOException $e){
             throw new Exception("Ocorreu um erro interno!");
@@ -57,7 +57,7 @@ function inserir(){
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
-                ':id' => $this->id,
+                ':id' => $this->id_ingrediente,
                 ':descricao_ingrediente' => $this->descricao_ingrediente,
                 ':calorias' => $this->calorias
             ]);
@@ -70,7 +70,7 @@ function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
-            $consulta->execute([':id' => $this->id]);
+            $consulta->execute([':id' => $this->id_ingrediente]);
         }catch(PDOException $e){
             die($e->getMessage());
         }
