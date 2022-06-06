@@ -11,7 +11,7 @@
         foreach($database->query("SELECT *, (SELECT SUM(ingredientes.calorias) as calorias_item FROM ingredientes
         INNER JOIN itens_ingredientes
         ON itens_ingredientes.id_ingrediente = ingredientes.id
-        WHERE itens_ingredientes.id_item = 13
+        WHERE ingredientes.id = 13
         ) FROM itens") as $item){
             $itens[] = [
                 "id" => $item["id"],
