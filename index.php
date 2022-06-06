@@ -1,7 +1,7 @@
 <?php // precisa de vários foreach ou só um?
 
     try{
-        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $database =new PDO("mysql:host=localhost;dbname=ru", "root", "");
         $itens = [];
         $ingredientes = [];
         $cardapios = [];
@@ -10,8 +10,10 @@
         
         foreach($database->query("SELECT *, (SELECT SUM(ingredientes.calorias) as calorias_item FROM ingredientes
         INNER JOIN itens_ingredientes
-        ON itens_ingredientes.id_ingrediente = ingredientes.id
-        WHERE ingredientes.id = 13
+        ON  itens_ingredientes.id_ingrediente = ingredientes.id
+        INNER JOIN itens 
+        ON itens.id = itens_ingredientes.id_item
+        WHERE itens.id = itens_ingredientes.id_item 
         ) FROM itens") as $item){
             $itens[] = [
                 "id" => $item["id"],
