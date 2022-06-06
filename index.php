@@ -9,7 +9,7 @@
         $usuarios = [];
         
         foreach($database->query("SELECT *, (SELECT SUM(ingredientes.calorias) as calorias_item FROM ingredientes
-        WHERE itens.id = itens_ingredientes.id_item) FROM itens
+        WHERE itens.id = 13) FROM itens
         INNER JOIN ingredientes
         ON ingredientes.id = itens_ingredientes.id_ingrediente
         INNER JOIN itens_ingredientes
