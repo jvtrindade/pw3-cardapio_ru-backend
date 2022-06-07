@@ -22,9 +22,9 @@
         header ("Location: ../frontend/privado/index.php");
     }*/
 
-    const DBNAME = "ru";
-    const USER = "root";
-    const PASSWORD = "";
+    $DBNAME = "ru";
+    $USER = "root";
+    $PASSWORD = "";
 
     require __DIR__ . '/vendor/autoload.php';
     require __DIR__ . "/key.php";
@@ -32,7 +32,7 @@
     use Firebase\JWT\Key;
     $usuario = $_POST['email'];
     $senha = $_POST['senha'];
-    $database = new PDO("mysql:localhost=host;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+    $database = new PDO("mysql:localhost=host;dbname=" . $DBNAME, $USER, $PASSWORD);
     try {
         
         $consulta = $database->prepare("SELECT id, nome FROM usuarios WHERE email=:email and senha =:senha");
