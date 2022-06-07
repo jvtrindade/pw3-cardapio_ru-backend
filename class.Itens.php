@@ -29,7 +29,12 @@ class Itens {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
-            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
+            $consulta = $db->prepare("START TRANSACTION;
+            INSERT INTO itens(descricao) VALUES (:descricao)
+            ////////SELECT//////////////
+            INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
+            commit;
+            ");
             $consulta->execute([
                 ':descricao' => $this->descricao
             ]);
@@ -39,7 +44,8 @@ function inserir(){
             $this->id = $data['id'];
 
         }catch(PDOException $e){
-            throw new Exception("Ocorreu um erro interno!");
+            $consultar = $db->prepare("Rollback;");
+            $consultar->execute();
             
         }
     }
