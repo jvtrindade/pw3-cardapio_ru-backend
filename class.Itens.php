@@ -11,7 +11,7 @@ class Itens {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
@@ -28,8 +28,13 @@ class Itens {
 
 function inserir(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
-            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $consulta = $db->prepare("START TRANSACTION;
+            INSERT INTO itens(descricao) VALUES (:descricao)
+            ////////SELECT//////////////
+            INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
+            commit;
+            ");
             $consulta->execute([
                 ':descricao' => $this->descricao
             ]);
@@ -39,14 +44,15 @@ function inserir(){
             $this->id = $data['id'];
 
         }catch(PDOException $e){
-            throw new Exception("Ocorreu um erro interno!");
+            $consultar = $db->prepare("Rollback;");
+            $consultar->execute();
             
         }
     }
 
     function alterarItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -59,7 +65,7 @@ function inserir(){
 
     function removerItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("DELETE FROM itens WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){

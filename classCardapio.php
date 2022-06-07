@@ -14,7 +14,7 @@
         }
 
         static function findbyPk($id){
-            $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $database->prepare("SELECT * FROM cardapios WHERE id=:id");
             $consulta->execute([":id => $id"]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Cardapios');
@@ -40,7 +40,7 @@
 
     function inserirCardapio(){
         try{
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo) VALUES (:dia,:tipo");
             $consulta->execute([
                 ':dia' => $this->dia,
@@ -58,7 +58,7 @@
 
     function alterarCardapio(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=pw3", "aluno", "aluno");
             $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -73,7 +73,7 @@
 
     function removerCardapio(){
         try {
-            $db = new PDO("mysql;host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql;host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("DELETE FROM cardapios WHERE id=:id");
         }catch(PDOException $e){
             die($e->getMessage());

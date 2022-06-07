@@ -4,7 +4,7 @@
         private $id;
 
         static function findbyPk($id){
-            $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $database->prepare("SELECT * FROM refeicao WHERE id =:id");
             $consulta->execute([":id" => $id]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Refeicao');
@@ -13,7 +13,7 @@
 
         function inserir(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
                 $consulta = $database->prepare("INSERT INTO refeicao(dia, refeicao, item) VALUES (:crn, :nome"); // tem que arrumar
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -27,7 +27,7 @@
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
                 $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -41,7 +41,7 @@
 
         function remover(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
                 $consulta = $database->prepare("DELETE FROM nutricionistas where crn = :crn");
                 $consulta->execute([":crn" => $this->crn]);
             }
