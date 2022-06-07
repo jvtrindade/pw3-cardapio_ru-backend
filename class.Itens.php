@@ -34,12 +34,12 @@ class Itens {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-            $consulta = $db->prepare("START TRANSACTION;
-            INSERT INTO itens(descricao) VALUES (:descricao)
-            ////////SELECT//////////////
-            INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
-            commit;
-            ");
+            $consulta = $db->prepare("BEGIN TRANSACTION;");
+            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
+            // ////////SELECT
+            // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
+            // commit;
+            // ");
             $consulta->execute([
                 ':descricao' => $this->descricao
             ]);

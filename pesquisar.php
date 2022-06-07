@@ -1,8 +1,8 @@
 <?php
 
-    $refeicao = null;//$_POST["refeicao"];
-    $dia = null;//$_POST["data"];
-    $item = "Arroz Branco"; //$_POST["item"];
+    $refeicao = $_POST["refeicao"];
+    $dia = $_POST["data"];
+    $item = $_POST["item"];
 
     $DBNAME = "ru";
     $USER = "root";
@@ -49,6 +49,8 @@
     // $dadoRefeicao = $consultaRefeicao->fetch();
 
     var_dump($dados);
+
+    print json_encode($dados);
 
     // print json_encode($dadoItem);
     // print json_encode($dadoData);
