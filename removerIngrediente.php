@@ -3,7 +3,7 @@ require "class.Ingrediente.php";
 
 $id = $_GET["id"];
 
-$ing = Ingrediente::findbyPk($id);
+$ing = Ingredientes::findbyPk($id);
 if (!$ing){
     throw new Exception ("Ingrediente não encontrado!");
 }

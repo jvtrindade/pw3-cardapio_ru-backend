@@ -1,6 +1,11 @@
 <?php
 
 class Ingredientes {
+
+    const DBNAME = "ru";
+    const USER = "root";
+    const PASSWORD = "";
+
     private $id_ingrediente;
     private $descricao_ingrediente = "";
     private $calorias = "";
@@ -12,7 +17,7 @@ class Ingredientes {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+        $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingredientes');
@@ -35,7 +40,7 @@ class Ingredientes {
 
 function inserir(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
                 ':descricao_ingrediente' => $this->descricao_ingrediente,
@@ -54,7 +59,7 @@ function inserir(){
 
     function alterarIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id_ingrediente,
@@ -68,7 +73,7 @@ function inserir(){
 
     function removerIngredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id_ingrediente]);
         }catch(PDOException $e){

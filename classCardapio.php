@@ -2,6 +2,10 @@
 
     class Cardapio{
 
+        const DBNAME = "ru";
+        const USER = "root";
+        const PASSWORD = "";
+
         private $id;
         private $dia = "";
         private $tipo = "";
@@ -14,7 +18,7 @@
         }
 
         static function findbyPk($id){
-            $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $database->prepare("SELECT * FROM cardapios WHERE id=:id");
             $consulta->execute([":id => $id"]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Cardapios');
@@ -40,7 +44,7 @@
 
     function inserirCardapio(){
         try{
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo) VALUES (:dia,:tipo");
             $consulta->execute([
                 ':dia' => $this->dia,
@@ -58,7 +62,7 @@
 
     function alterarCardapio(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=pw3", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -73,8 +77,11 @@
 
     function removerCardapio(){
         try {
-            $db = new PDO("mysql;host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql;host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("DELETE FROM cardapios WHERE id=:id");
+            $consulta->execute([
+                ':id' => $this->id
+            ]);
         }catch(PDOException $e){
             die($e->getMessage());
         }

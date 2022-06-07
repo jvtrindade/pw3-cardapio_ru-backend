@@ -1,7 +1,11 @@
 <?php // precisa de vários foreach ou só um?
 
+$DBNAME = "ru";
+$USER = "root";
+$PASSWORD = "";
+
     try{
-        $database =new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+        $database =new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
         $itens = [];
         $ingredientes = [];
         $cardapios = [];

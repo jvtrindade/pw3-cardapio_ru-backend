@@ -3,8 +3,12 @@
     $refeicao = null;//$_POST["refeicao"];
     $dia = null;//$_POST["data"];
     $item = "Arroz Branco"; //$_POST["item"];
+
+    $DBNAME = "ru";
+    $USER = "root";
+    $PASSWORD = "";
     
-    $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+    $database = new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
 
 
     $busca = [];

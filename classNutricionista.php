@@ -1,6 +1,11 @@
 <?php
 
     class Nutricionista{
+
+        const DBNAME = "ru";
+        const USER = "root";
+        const PASSWORD = "";
+
         private $crn = "";
         private $nome = "";
 
@@ -12,7 +17,7 @@
         }
 
         static function findbyPk($crn){
-            $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE crn=:crn");
             $consulta->execute([":crn" => $crn]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Nutricionista');
@@ -34,7 +39,7 @@
 
         function inserir(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
                 $consulta = $database->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome");
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -52,7 +57,7 @@
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
                 $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -66,7 +71,7 @@
 
         function remover(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
                 $consulta = $database->prepare("DELETE FROM nutricionistas where crn = :crn");
                 $consulta->execute([":crn" => $this->crn]);
             }

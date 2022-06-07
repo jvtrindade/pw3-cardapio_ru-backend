@@ -1,6 +1,11 @@
 <?php
 
 class Itens {
+
+    const DBNAME = "ru";
+    const USER = "root";
+    const PASSWORD = "";
+
     protected $id;
     protected $descricao = "";
 
@@ -11,7 +16,7 @@ class Itens {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+        $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
@@ -28,7 +33,7 @@ class Itens {
 
 function inserir(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("START TRANSACTION;
             INSERT INTO itens(descricao) VALUES (:descricao)
             ////////SELECT//////////////
@@ -52,7 +57,7 @@ function inserir(){
 
     function alterarItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -65,7 +70,7 @@ function inserir(){
 
     function removerItens(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
+            $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("DELETE FROM itens WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
