@@ -4,7 +4,7 @@
     $dia = null;//$_POST["data"];
     $item = "Arroz Branco"; //$_POST["item"];
     
-    $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+    $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
 
 
     $busca = [];

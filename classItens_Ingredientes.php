@@ -8,7 +8,7 @@ class Itens_Ingredientes extends Itens{
     private $id_ingredientes = "";
 
     /*static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+        $database = new PDO("mysql:host=localhost;dbname=ru", "aluno", "");
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
@@ -34,7 +34,7 @@ class Itens_Ingredientes extends Itens{
     }
 function inserirItens_Ingredientes(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingredientes) VALUES (:id_item, :id_ingredientes)");
             $consulta->execute([
                 ':id_item' => $this->id_item,
@@ -49,7 +49,7 @@ function inserirItens_Ingredientes(){
 
     function alterarItens_Ingredientes(){ //preciso ver o WHERE
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("UPDATE itens_ingredientes SET id_item = :id_item, id_ingredientes = :id_ingredientes WHERE id= :id");
             $consulta->execute([
                 ':id_item' => $this->id_item,
@@ -62,7 +62,7 @@ function inserirItens_Ingredientes(){
 
     function removerItens_Ingredientes(){ //preciso ver o WHERE
         try {
-            $db = new PDO("mysql:host=localhost;dbname=ru", "root", "");
+            $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
             $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
