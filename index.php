@@ -51,16 +51,26 @@
         }
         foreach($database->query("SELECT * FROM usuarios") as $usuario){ //acho q não precisa
             $usuarios [] = [
-                "id" => $usuarios["id"],
-                "nome" => $usuarios["nome"],
-                "senha" => $usuarios["senha"],
-                "email" => $usuarios["email"]
+                "id" => $usuario["id"],
+                "nome" => $usuario["nome"],
+                "senha" => $usuario["senha"],
+                "email" => $usuario["email"]
             ];
         }
-        print json_encode($itens);
-        print json_encode($cardapios);
-        print json_encode($ingredientes);
-        print json_encode($nutricionistas);
+
+        $obj = [
+            'itens' => $itens,
+            'cardapios' => $cardapios,
+            'ingredientes'=> $ingredientes,
+            'nutricionistas' => $nutricionistas
+        ];
+
+        // print json_encode($itens);
+        // print json_encode($cardapios);
+        // print json_encode($ingredientes);
+        // print json_encode($nutricionistas);
+
+        print json_encode($obj);
     }
     catch (PDOException $e){
         die($e->getMessage());
