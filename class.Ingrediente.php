@@ -36,7 +36,7 @@ class Ingredientes {
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=ru", "aluno", "aluno");
-            $consulta = $db->prepare("INSERT INTO ingredientes (descricao_ingrediente, calorias) VALUES(:descricao_ingrediente, :calorias)");
+            $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
                 ':descricao_ingrediente' => $this->descricao_ingrediente,
                 ':calorias' => $this->calorias
