@@ -38,17 +38,28 @@
         }
 
         function inserir(){
-            try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-                $consulta = $database->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome");
+            try {
+                $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                //$consulta = $db->prepare("BEGIN TRANSACTION;");
+                $consulta = $db->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome)");
+                // ////////SELECT
+                // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
+                // commit;
+                // ");
                 $consulta->execute([
-                    ":crn" => $this->crn,
-                    ":nome" => $this->nome
+                    ':crn' => $this->crn,
+                    ':nome' => $this->nome
                 ]);
-                $data = $consulta->fetch(PDO::FETCH_ASSOC);
-            }
-            catch(PDOException $e){
+                //$consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
+                //$consulta->execute();
+                //$data = $consulta->fetch(PDO::FETCH_ASSOC);
+                //$this->id = $data['id'];
+    
+            }catch(PDOException $e){
                 throw new Exception("Ocorreu um erro interno");
+                //$consultar = $db->prepare("Rollback;");
+                //$consultar->execute();
+                
             }
         }
 

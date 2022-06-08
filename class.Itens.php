@@ -46,9 +46,6 @@ function inserir(){
             $consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
             $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
-
-            var_dump($data);
-            die();
             $this->id = $data['id'];
 
         }catch(PDOException $e){
