@@ -9,11 +9,13 @@
         private $id;
         private $dia = "";
         private $tipo = "";
+        private $crn_nutricionista = "";
 
         function __toString(){
             return json_encode([
                 "dia" => $this->dia,
                 "tipo" => $this->tipo,
+                "crn_nutricionista" => $this->crn_nutricionista
             ]);
         }
 
@@ -40,15 +42,24 @@
         function getTipo(){
             return $this->tipo;
         }
+
+        function setCrn_nutricionista($valor){
+            $this->crn_nutricionista = $valor;
+        }
+
+        function getCrn_nutricionista(){
+            return $this->crn_nutricionista;
+        }
     
 
     function inserirCardapio(){
         try{
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo) VALUES (:dia,:tipo");
+            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia,:tipo,:crn_nutricionista");
             $consulta->execute([
                 ':dia' => $this->dia,
-                ':tipo' => $this->tipo
+                ':tipo' => $this->tipo,
+                ':crn_nutricionista' => $this->crn_nutricionista
             ]);
 
             $consulta = $db->prepare("SELECT id FROM cardapios ORDER BY id DESC LIMIT 1");
