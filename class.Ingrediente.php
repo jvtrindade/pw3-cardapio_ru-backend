@@ -3,8 +3,8 @@
 class Ingredientes {
 
     const DBNAME = "ru";
-    const USER = "root";
-    const PASSWORD = "";
+    const USER = "aluno";
+    const PASSWORD = "aluno";
 
     private $id_ingrediente;
     private $descricao_ingrediente = "";

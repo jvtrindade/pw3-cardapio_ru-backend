@@ -3,8 +3,8 @@
     class Nutricionista{
 
         const DBNAME = "ru";
-        const USER = "root";
-        const PASSWORD = "";
+        const USER = "aluno";
+        const PASSWORD = "aluno";
 
         private $crn = "";
         private $nome = "";
