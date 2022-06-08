@@ -1,4 +1,5 @@
 <?php
+    require_once dirname(__FILE__). "/interface.CRUD.php";
 
     class Cardapio implements CRUD{
 
