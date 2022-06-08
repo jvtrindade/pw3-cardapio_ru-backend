@@ -55,7 +55,7 @@
     function inserirCardapio(){
         try{
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia,:tipo,:crn_nutricionista");
+            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia, :tipo, :crn_nutricionista");
             $consulta->execute([
                 ':dia' => $this->dia,
                 ':tipo' => $this->tipo,
@@ -67,7 +67,7 @@
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
         }catch(PDOException $e){
-            throw new Exception("Ocorreu um erro interno!");
+            throw new Exception("Ocorreu um erro interno!" . $e);
         }
     }
 

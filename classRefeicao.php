@@ -15,6 +15,14 @@
             return $consulta->fetch();
         }
 
+        function setDia($value){
+            $this->dia = $valor;
+        }
+        function getDia($value){
+            return $this->dia
+        }
+        function setTipo()
+
         function inserir(){
             try{
                 $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
