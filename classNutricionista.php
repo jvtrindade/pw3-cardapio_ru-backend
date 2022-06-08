@@ -45,6 +45,7 @@
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
                 ]);
+                $data = $consulta->fetch(PDO::FETCH_ASSOC);
             }
             catch(PDOException $e){
                 throw new Exception("Ocorreu um erro interno");
