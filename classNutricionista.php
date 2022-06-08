@@ -48,6 +48,7 @@
                 $data = $consulta->fetch(PDO::FETCH_ASSOC);
             }
             catch(PDOException $e){
+                var_dump($data);
                 throw new Exception("Ocorreu um erro interno");
             }
         }
