@@ -1,6 +1,7 @@
 <?php
+require_once dirname(__FILE__). "/interface.CRUD.php";
 
-class Itens {
+class Itens implements CRUD {
 
     const DBNAME = "ru";
     const USER = "root";
@@ -8,12 +9,13 @@ class Itens {
 
     private $id;
     private $descricao = "";
-    private $id_item = "";
-    private $id_ingrediente = "";
+    private $ingredientes = [];
 
     function __toString(){
         return json_encode([
+            "id" => $this->id,
             "descricao" => $this->descricao,
+            'ingredientes' => $this->ingredientes
         ]);
     }
 
@@ -32,71 +34,87 @@ class Itens {
         return $this->descricao;
     }
 
-    function setId_item($valor){
-        $this->id_item = $valor;
-    }
-    function getId_item(){
-        return $this->id_item;
-    }
-
-    function setId_ingrediente($valor){
-        $this->id_item = $valor;
-    }
-    function getId_ingrediente(){
-        return $this->id_ingrediente;
+    function setIngredientes($ingredientes){
+        foreach($ingredientes as $ingrediente) {
+            $this->ingredientes[] = +$ingrediente;
+        }
     }
 
-
-function inserir(){
+    function inserir(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-            //$consulta = $db->prepare("BEGIN TRANSACTION;");
+            $db->query("START TRANSACTION;");
+            
             $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
-            // "START TRANSACTION;
-            // SELECT id FROM itens ORDER BY id DESC LIMIT 1
-            // INSERT INTO itens (descricao) VALUES (:descricao)
-            // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES (:id_item, :id_ingrediente);
-            // COMMIT;");
-            $consulta->execute([
-                ':descricao' => $this->descricao,
-                //':id_item' => $this->id_item,
-                //':id_ingrediente' => $this->id_ingrediente
-            ]);
+            
+            $consulta->execute([':descricao' => $this->descricao]);
             $consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
             $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
 
+            foreach($this->ingredientes as $idIngrdiente) {
+                $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) values (:idItem, :idIngrediente);");
+                $consulta->execute([
+                    ':idItem' => $this->id,
+                    ':idIngrediente' => $idIngrdiente
+                ]);
+            }
+            $db->query("COMMIT;");
+
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             throw new Exception("Ocorreu um erro interno");
-            //$consultar = $db->prepare("Rollback;");
-            //$consultar->execute();
-            
         }
     }
 
-    function alterarItens(){
+    function alterar(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $db->query("START TRANSACTION;");
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
                 ':descricao' => $this->descricao
             ]);
+
+            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_item = :idItem;");
+            $consulta->execute([':idItem' => $this->id]);
+
+            //throw new Exception("erro");
+            foreach($this->ingredientes as $idIngrdiente) {
+                $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) values (:idItem, :idIngrediente);");
+                $consulta->execute([
+                    ':idItem' => $this->id,
+                    ':idIngrediente' => $idIngrdiente
+                ]);
+            }
+
+            $db->query("COMMIT;");
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             die($e->getMessage());
         }
     }
 
-    function removerItens(){
+    function remover(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $db->query("START TRANSACTION;");
+
+            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_item = :idItem;");
+            $consulta->execute([':idItem' => $this->id]);
+
             $consulta = $db->prepare("DELETE FROM itens WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
+            $db->query("COMMIT;");
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             die($e->getMessage());
         }
     }
 }
-    
-    ?>
+?>

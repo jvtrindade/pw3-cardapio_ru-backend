@@ -15,13 +15,18 @@ try {
         }
         
     }*/
+
+    
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
+    $itn->setIngredientes($_POST['ingrediente_item']);
     //$itn->setId_item($_POST['ingrediente_item']);
     //$itn->setId_Ingrediente($_POST['item_refeicao']);
+
     $itn->inserir();
     print $itn;
-    //$itn_igr = new Itens_Ingredientes();
+
+//$itn_igr = new Itens_Ingredientes();
     //$itn_igr->setId_Item($this->id);
     //$itn_igr->setId_Ingredientes($this->id_ingrediente);
     //$itn_igr->inserirItens_Ingredientes();
