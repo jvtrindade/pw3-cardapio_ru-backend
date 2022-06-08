@@ -45,10 +45,6 @@
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
                 ]);
-                $consulta = $database->prepare("SELECT crn FROM itens ORDER BY crn DESC LIMIT 1");
-                $consulta->execute();
-                $data = $consulta->fetch(PDO::FETCH_ASSOC);
-                $this->id = $data['crn'];
             }
             catch(PDOException $e){
                 throw new Exception("Ocorreu um erro interno");

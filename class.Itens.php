@@ -49,8 +49,9 @@ function inserir(){
             $this->id = $data['id'];
 
         }catch(PDOException $e){
-            $consultar = $db->prepare("Rollback;");
-            $consultar->execute();
+            throw new Exception("Ocorreu um erro interno");
+            //$consultar = $db->prepare("Rollback;");
+            //$consultar->execute();
             
         }
     }
