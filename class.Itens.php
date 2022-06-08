@@ -35,8 +35,8 @@ class Itens {
     function setId_item($valor){
         $this->id_item = $valor;
     }
-    function getId_item($valor){
-        return $this->descricao;
+    function getId_item(){
+        return $this->id_item;
     }
 
     function setId_ingrediente($valor){
