@@ -74,11 +74,12 @@
     function alterarCardapio(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
-            $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo WHERE id= :id");
+            $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, crn_nutricionsita = :crn_nutricionista WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
                 ':dia' => $this->dia,
-                ':tipo' => $this->tipo
+                ':tipo' => $this->tipo,
+                ':crn_nutricionista' => $this->crn_nutricionista
             ]);
         }catch(PDOException $e){
             die($e->getMessage());
