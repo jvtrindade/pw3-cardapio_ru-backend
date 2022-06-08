@@ -51,16 +51,19 @@ function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             //$consulta = $db->prepare("BEGIN TRANSACTION;");
-            $consulta = $db->prepare("START TRANSACTION;
-            SELECT id FROM itens ORDER BY id DESC LIMIT 1
-            INSERT INTO itens (descricao) VALUES (:descricao)
-            INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES (:id_item, :id_ingrediente);
-            COMMIT;");
+            $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
+            // "START TRANSACTION;
+            // SELECT id FROM itens ORDER BY id DESC LIMIT 1
+            // INSERT INTO itens (descricao) VALUES (:descricao)
+            // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES (:id_item, :id_ingrediente);
+            // COMMIT;");
             $consulta->execute([
                 ':descricao' => $this->descricao,
-                ':id_item' => $this->id_item,
-                ':id_ingrediente' => $this->id_ingrediente
+                //':id_item' => $this->id_item,
+                //':id_ingrediente' => $this->id_ingrediente
             ]);
+            $consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
+            $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
 
