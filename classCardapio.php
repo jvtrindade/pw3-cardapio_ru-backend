@@ -1,19 +1,19 @@
 <?php
 
-    class Cardapio{
+    class Cardapio implements CRUD{
 
         const DBNAME = "ru";
         const USER = "aluno";
         const PASSWORD = "aluno";
 
         private $id;
-        private $dia = "";
+        private $data = "";
         private $tipo = "";
         private $crn_nutricionista = "";
 
         function __toString(){
             return json_encode([
-                "dia" => $this->dia,
+                "data" => $this->data,
                 "tipo" => $this->tipo,
                 "crn_nutricionista" => $this->crn_nutricionista
             ]);
@@ -27,12 +27,12 @@
             return $consulta->fetch();
         }
 
-        function setDia($valor){
-            $this->dia = $valor;
+        function setData($valor){
+            $this->data = $valor;
         }
 
-        function getDia(){
-            return $this->dia;
+        function getData(){
+            return $this->data;
         }
 
         function setTipo($valor){
@@ -52,12 +52,12 @@
         }
     
 
-    function inserirCardapio(){
+    function inserir(){
         try{
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia, :tipo, :crn_nutricionista");
             $consulta->execute([
-                ':dia' => $this->dia,
+                ':dia' => $this->data,
                 ':tipo' => $this->tipo,
                 ':crn_nutricionista' => $this->crn_nutricionista
             ]);
@@ -71,13 +71,13 @@
         }
     }
 
-    function alterarCardapio(){
+    function alterar(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, crn_nutricionsita = :crn_nutricionista WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
-                ':dia' => $this->dia,
+                ':dia' => $this->data,
                 ':tipo' => $this->tipo,
                 ':crn_nutricionista' => $this->crn_nutricionista
             ]);
@@ -87,7 +87,7 @@
         
     }
 
-    function removerCardapio(){
+    function remover(){
         try {
             $db = new PDO("mysql;host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("DELETE FROM cardapios WHERE id=:id");
