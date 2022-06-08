@@ -6,8 +6,10 @@ class Itens {
     const USER = "root";
     const PASSWORD = "";
 
-    protected $id;
-    protected $descricao = "";
+    private $id;
+    private $descricao = "";
+    private $id_item = "";
+    private $id_ingrediente = "";
 
     function __toString(){
         return json_encode([
@@ -30,21 +32,36 @@ class Itens {
         return $this->descricao;
     }
 
+    function setId_item($valor){
+        $this->id_item = $valor;
+    }
+    function getId_item($valor){
+        return $this->descricao;
+    }
+
+    function setId_ingrediente($valor){
+        $this->id_item = $valor;
+    }
+    function getId_ingrediente(){
+        return $this->id_ingrediente;
+    }
+
 
 function inserir(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             //$consulta = $db->prepare("BEGIN TRANSACTION;");
-            $consulta = $db->prepare("INSERT INTO itens(descricao) VALUES (:descricao)");
-            // ////////SELECT
-            // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
-            // commit;
-            // ");
-            $consulta->execute([
-                ':descricao' => $this->descricao
-            ]);
+            $consulta = $db->prepare("START TRANSACTION;");
             $consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
-            $consulta->execute();
+            $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
+            $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
+            $consulta = $db->prepare("INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES (:id_item, :id_ingrediente);");
+            $consulta = $db->prepare("COMMIT;");
+            $consulta->execute([
+                ':descricao' => $this->descricao,
+                ':id_item' => $this->id_item,
+                ':id_ingrediente' => $this->id_ingrediente
+            ]);
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
 

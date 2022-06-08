@@ -17,6 +17,8 @@ try {
     }*/
     $itn = new Itens();
     $itn->setDescricao($_POST['item']);
+    $itn->setId_item($_POST['ingrediente_item']);
+    $itn->setId_Ingrediente($_POST['item_refeicao']);
     $itn->inserir();
     print $itn;
     //$itn_igr = new Itens_Ingredientes();
