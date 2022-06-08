@@ -51,8 +51,6 @@
                 $this->id = $data['crn'];
             }
             catch(PDOException $e){
-                var_dump($consulta);
-                var_dump($data);
                 throw new Exception("Ocorreu um erro interno");
             }
         }
