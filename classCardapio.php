@@ -7,14 +7,17 @@
         const PASSWORD = "aluno";
 
         private $id;
-        private $data = "";
-        private $tipo = "";
+        private $data;
+        private $tipo;
+        private $itens = [];
         private $crn_nutricionista = "";
 
         function __toString(){
             return json_encode([
+                "id" => $this->id,
                 "data" => $this->data,
                 "tipo" => $this->tipo,
+                "itens" => $this->itens,
                 "crn_nutricionista" => $this->crn_nutricionista
             ]);
         }
@@ -43,6 +46,12 @@
             return $this->tipo;
         }
 
+        function setItens(){
+            foreach($itens as $item){
+                $this->itens[] = +$item;
+            }
+        }
+
         function setCrn_nutricionista($valor){
             $this->crn_nutricionista = $valor;
         }
@@ -53,9 +62,13 @@
     
 
     function inserir(){
+        $db = null;
         try{
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $db->query("START TRANSACTION;");
+
             $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia, :tipo, :crn_nutricionista");
+
             $consulta->execute([
                 ':dia' => $this->data,
                 ':tipo' => $this->tipo,
@@ -66,6 +79,15 @@
             $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
+
+            foreach($this->itens as $idItem){
+                $consulta = $db->prepare("INSERT INTO itens_cardapios (id_item, id_cardapio) VALUES (:idItem, :idCardapio);");
+                $consulta->execute([
+                    ':idItem' => $idItem,
+                    'idCardapio' => $this->id
+                ]);
+            }
+            $db->query("COMMIT;");
         }catch(PDOException $e){
             throw new Exception("Ocorreu um erro interno!" . $e);
         }

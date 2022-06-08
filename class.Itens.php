@@ -58,7 +58,7 @@ class Itens implements CRUD {
                 $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) values (:idItem, :idIngrediente);");
                 $consulta->execute([
                     ':idItem' => $this->id,
-                    ':idIngrediente' => $idIngrdiente
+                    ':idIngrediente' => $idIngrediente
                 ]);
             }
             $db->query("COMMIT;");
