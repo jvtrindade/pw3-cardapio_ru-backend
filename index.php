@@ -1,8 +1,8 @@
 <?php // precisa de vários foreach ou só um?
 
 $DBNAME = "ru";
-$USER = "root";
-$PASSWORD = "";
+$USER = "aluno";
+$PASSWORD = "aluno";
 
     try{
         $database =new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
