@@ -9,10 +9,6 @@ $dotenv->load();
 
 class Itens implements CRUD {
 
-    const DBNAME = "ru";
-    const USER = "aluno";
-    const PASSWORD = "aluno";
-
     private $id;
     private $descricao = "";
     private $ingredientes = [];

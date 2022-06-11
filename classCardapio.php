@@ -9,10 +9,6 @@
 
     class Cardapio implements CRUD{
 
-        const DBNAME = "ru";
-        const USER = "aluno";
-        const PASSWORD = "aluno";
-
         private $id;
         private $data;
         private $tipo;
