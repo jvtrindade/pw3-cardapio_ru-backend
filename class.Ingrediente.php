@@ -20,7 +20,7 @@ class Ingredientes implements CRUD{
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_NAME'], $_ENV['DB_NAME']);
+        $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingredientes');
@@ -44,7 +44,7 @@ class Ingredientes implements CRUD{
 function inserir(){
     $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
+            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
                 ':descricao_ingrediente' => $this->descricao,
@@ -64,7 +64,7 @@ function inserir(){
     function alterar(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
+            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -78,7 +78,7 @@ function inserir(){
 
     function remover(){
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
+            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
