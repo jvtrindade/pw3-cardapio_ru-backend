@@ -54,7 +54,7 @@ class Itens implements CRUD {
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
             $this->id = $data['id'];
 
-            foreach($this->ingredientes as $idIngrdiente) {
+            foreach($this->ingredientes as $idIngrediente) {
                 $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) values (:idItem, :idIngrediente);");
                 $consulta->execute([
                     ':idItem' => $this->id,
@@ -84,11 +84,11 @@ class Itens implements CRUD {
             $consulta->execute([':idItem' => $this->id]);
 
             //throw new Exception("erro");
-            foreach($this->ingredientes as $idIngrdiente) {
+            foreach($this->ingredientes as $idIngrediente) {
                 $consulta = $db->prepare("INSERT INTO itens_ingredientes (id_item, id_ingrediente) values (:idItem, :idIngrediente);");
                 $consulta->execute([
                     ':idItem' => $this->id,
-                    ':idIngrediente' => $idIngrdiente
+                    ':idIngrediente' => $idIngrediente
                 ]);
             }
 

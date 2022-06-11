@@ -47,8 +47,8 @@
             return $this->tipo;
         }
 
-        function setItens($itens){
-            foreach($itens as $item){
+        function setItens($valor){
+            foreach($valor as $item){
                 $this->itens[] = +$item;
             }
         }
@@ -90,13 +90,16 @@
             }
             $db->query("COMMIT;");
         }catch(PDOException $e){
-            throw new Exception("Ocorreu um erro interno!" . $e);
+            $db->query("ROLLBACK;");
+            throw new Exception("Ocorreu um erro interno");
         }
     }
 
     function alterar(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $db->query("START TRANSACTION;");
             $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, crn_nutricionsita = :crn_nutricionista WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -104,24 +107,81 @@
                 ':tipo' => $this->tipo,
                 ':crn_nutricionista' => $this->crn_nutricionista
             ]);
+
+            $consulta = $db->prepare("DELETE FROM itens_cardapios WHERE id_cardapio = :idCardapio");
+            $consulta->execute([':idCalendario' => $this->id]);
+
+            foreach($this->itens as $idItem){
+                $consulta = $db->prepare("INSERT INTO itens_cardapios (id_item, id_cardapio) values (:idItem, :idCardapio);");
+                $consulta->execute([
+                    ":idItem" => $this->idItem,
+                    ":idCardapio" => $this->id
+                ]);
+            }
+
+            $db->query("COMMIT;");
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             die($e->getMessage());
         }
         
     }
 
     function remover(){
+        $db = null;
         try {
             $db = new PDO("mysql;host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $db->query("START TRANSACTION;");
+
+            $consulta = $db->prepare("DELETE FROM itens_cardapios WHERE id_cardapio = :idCardapio;");
+            $consulta->execute([':idCalendario' => $this->id]);
+
             $consulta = $db->prepare("DELETE FROM cardapios WHERE id=:id");
-            $consulta->execute([
-                ':id' => $this->id
-            ]);
+            $consulta->execute([':id' => $this->id]);
+            $db->query("COMMIT;");
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             die($e->getMessage());
         }
     }
 
+    function mostrarCardapio(){
+
+        $db = new PDO("mysql;host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+    
+        if($this->id !== null && $this->id != ''){
+    
+          $sql = 'SELECT * FROM cardapios WHERE id = :id';
+    
+        }else if($this->data !== null && $this->data != ''){
+    
+             $sql = 'SELECT * FROM cardapios
+                   WHERE dia = :dia';
+    
+        }else{ 
+     
+        $sql = 'SELECT * FROM cardapios'; 
+     
+        } 
+     
+        $resultado = $db->prepare($sql); 
+    
+        if($this->id !== null && $this->id != ''){ 
+     
+        $resultado->bindValue(':id', $this->id); 
+    
+        }
+    
+        if($this->data !== null && $this->data != ''){ 
+     
+         $resultado->bindValue(':dia', $this->data); 
+        } 
+    
+        $resultado->execute(); 
+    
+        return $resultado->fetchAll(PDO::FETCH_ASSOC); 
+     
+    }
     
 }
 

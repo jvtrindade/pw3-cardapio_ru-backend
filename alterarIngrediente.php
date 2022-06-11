@@ -4,8 +4,8 @@ require "class.Ingrediente.php";
 
 $id = $_GET["id"];
 
-$ing = Ingrediente::findbyPk($id);
-if(!$p){
+$ing = Ingredientes::findbyPk($id);
+if(!$ing){
     throw new Exception("Ingrediente não encontrado!");
 }
 $ing->setId($_POST["id"]);
