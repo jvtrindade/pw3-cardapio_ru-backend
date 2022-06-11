@@ -47,7 +47,7 @@
             return $this->tipo;
         }
 
-        function setItens(){
+        function setItens($itens){
             foreach($itens as $item){
                 $this->itens[] = +$item;
             }
@@ -121,6 +121,12 @@
             die($e->getMessage());
         }
     }
+
+    
 }
+
+
+
+    
 
 ?>
