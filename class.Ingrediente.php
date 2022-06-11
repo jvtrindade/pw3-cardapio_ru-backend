@@ -1,18 +1,19 @@
 <?php
+require_once dirname(__FILE__). "/interface.CRUD.php";
 
-class Ingredientes {
+class Ingredientes implements CRUD{
 
     const DBNAME = "ru";
     const USER = "aluno";
     const PASSWORD = "aluno";
 
-    private $id_ingrediente;
-    private $descricao_ingrediente = "";
+    private $id;
+    private $descricao = "";
     private $calorias = "";
 
     function __toString(){
         return json_encode([
-            "descricao_ingrediente" => $this->descricao_ingrediente,
+            "descricao_ingrediente" => $this->descricao,
         ]);
     }
 
@@ -24,11 +25,11 @@ class Ingredientes {
         return $consulta->fetch();
     }
 
-    function setdescricao_ingrediente($valor){
-        $this->descricao_ingrediente = $valor;
+    function setDescricao($valor){
+        $this->descricao = $valor;
     }
-    function getdescricao_ingrediente(){
-        return $this->descricao_ingrediente;
+    function getDescricao(){
+        return $this->descricao;
     }
     function setCalorias($valor){
         $this->calorias = $valor;
@@ -39,17 +40,18 @@ class Ingredientes {
 
 
 function inserir(){
+    $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
-                ':descricao_ingrediente' => $this->descricao_ingrediente,
+                ':descricao_ingrediente' => $this->descricao,
                 ':calorias' => $this->calorias
             ]);
             $consulta = $db->prepare("SELECT id FROM ingredientes ORDER BY id DESC LIMIT 1");
             $consulta->execute();
             $data = $consulta->fetch(PDO::FETCH_ASSOC);
-            $this->id_ingrediente = $data['id'];
+            $this->id = $data['id'];
 
         }catch(PDOException $e){
             throw new Exception("Ocorreu um erro interno!");
@@ -57,13 +59,14 @@ function inserir(){
         }
     }
 
-    function alterarIngredientes(){
+    function alterar(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
-                ':id' => $this->id_ingrediente,
-                ':descricao_ingrediente' => $this->descricao_ingrediente,
+                ':id' => $this->id,
+                ':descricao_ingrediente' => $this->descricao,
                 ':calorias' => $this->calorias
             ]);
         }catch(PDOException $e){
@@ -71,11 +74,11 @@ function inserir(){
         }
     }
 
-    function removerIngredientes(){
+    function remover(){
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
-            $consulta->execute([':id' => $this->id_ingrediente]);
+            $consulta->execute([':id' => $this->id]);
         }catch(PDOException $e){
             die($e->getMessage());
         }
