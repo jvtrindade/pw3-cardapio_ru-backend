@@ -9,6 +9,7 @@
         throw new Exception ("Usuário não encontrado!");
     }
     $n->remover();
-    print $n;
+    
+    header('location: ../frontend/privado/index.php');
 
 ?>
