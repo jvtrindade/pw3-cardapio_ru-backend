@@ -1,4 +1,10 @@
 <?php
+    require __DIR__ . '/vendor/autoload.php';
+
+    use Dotenv\Dotenv;
+    
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
     class Nutricionista{
 
@@ -17,7 +23,7 @@
         }
 
         static function findbyPk($crn){
-            $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE crn=:crn");
             $consulta->execute([":crn" => $crn]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Nutricionista');
@@ -39,7 +45,7 @@
 
         function inserir(){
             try {
-                $db = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 //$consulta = $db->prepare("BEGIN TRANSACTION;");
                 $consulta = $db->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome)");
                 // ////////SELECT
@@ -65,7 +71,7 @@
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -79,7 +85,7 @@
 
         function remover(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 $consulta = $database->prepare("DELETE FROM nutricionistas where crn = :crn");
                 $consulta->execute([":crn" => $this->crn]);
             }

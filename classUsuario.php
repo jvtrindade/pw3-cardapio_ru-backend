@@ -1,4 +1,10 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
     class Usuario{
 
@@ -21,7 +27,7 @@
         }
 
         static function findbyPk ($id){
-            $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+            $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $consulta = $database->prepare("SELECT * FROM usuarios WHERE id=:id");
             $consulta->execute([":id" => $id]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, "Usuario");
@@ -49,7 +55,7 @@
 
         function inserir(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 $consulta = $database->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)");
                 $consulta->execute([
                     ":nome" => $this->nome,
@@ -68,7 +74,7 @@
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 $consulta = $database->prepare("UPDATE usuarios SET nome = :nome, email = :email, senha = :senha WHERE id = :id");
                 $consulta->execute([
                     ":id" => $this->id,
@@ -84,7 +90,7 @@
 
         function remover(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . SELF::DBNAME, SELF::USER, SELF::PASSWORD);
+                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 $consulta = $database->prepare("DELETE FROM usuarios WHERE id = :id");
                 $consulta->execute([":id" => $this->id]);
             }
