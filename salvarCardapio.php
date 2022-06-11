@@ -2,11 +2,12 @@
 require "classCardapio.php";
 
 try {
-    $c = new Cardapio();
-    $c->setDia($_POST['data']);
-    $c->setTipo($_POST['tipo']);
-    $c->setCrn_nutricionista($_POST['nutricionista']);
-    $c->inserirCardapio();
+    $car = new Cardapio();
+    $car->setData($_POST['data']);
+    $car->setTipo($_POST['tipo']);
+    $car->setCrn_nutricionista($_POST['nutricionista']);
+    $car->setItens($_POST['item_refeicao']);
+    $car->inserir();
     print $c;
 }catch(Exception $e){
     print json_encode([
