@@ -1,13 +1,19 @@
 <?php
 require "classCardapio.php";
 
-$id = $_GET["id"];
+try{
+    $id = $_GET["id"];
 
-$itn = Cardapio::findbyPk($id);
-if (!$itn){
-    throw new Exception ("Cardapio não encontrado!");
+    $car = Cardapio::findbyPk($id);
+    if (!$car){
+        throw new Exception ("Cardápio não encontrado!");
+    }
+    $car->removerCardapio();
+    print $car;
+}catch(Exception $e){
+    print json_encode([
+        "error" => true,
+        "message" => $e->getMessage()
+    ]);
 }
-$itn->removerCardapio();
-print $itn;
-
 ?>
