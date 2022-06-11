@@ -8,7 +8,7 @@ try {
         throw new Exception ("Item não encontrado!");
     }
     $itn->remover();
-    print $itn;
+    header('location: ../frontend/privado/index.php');
 }catch(Exception $e){
     print json_encode([
         "error" => true,

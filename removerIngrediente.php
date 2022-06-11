@@ -8,6 +8,6 @@ if (!$ing){
     throw new Exception ("Ingrediente não encontrado!");
 }
 $ing->removerIngredientes();
-print $ing;
+header('location: ../frontend/privado/index.php');
 
 ?>
