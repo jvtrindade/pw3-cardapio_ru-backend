@@ -3,12 +3,18 @@
 require __DIR__ . '/vendor/autoload.php';
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+/* $dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load(); */
 
-$USER = $_ENV['DB_USER'];
+/* $USER = $_ENV['DB_USER'];
 $PASSWORD = $_ENV['DB_PASSWORD'];
-$DBNAME = $_ENV['DB_NAME'];
+$DBNAME = $_ENV['DB_NAME']; */
+
+$DBNAME = 'ru';
+$USER = 'root';
+$PASSWORD = '';
+
+
 
     try{
         $database =new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
@@ -49,7 +55,7 @@ $DBNAME = $_ENV['DB_NAME'];
         foreach($database->query("SELECT * FROM cardapios") as $cardapio){
             $cardapios[] = [
                 "id" => $cardapio["id"],
-                "dia" => $cardapio["dia"],
+                "dia" => $cardapio["data"],
                 "tipo" => $cardapio["tipo"] // ver se tem um if pros números
             ];
         }
