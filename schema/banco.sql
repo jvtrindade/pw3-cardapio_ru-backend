@@ -4,6 +4,7 @@ USE RU;
 CREATE TABLE itens (
 	id int AUTO_INCREMENT NOT NULL,
     descricao varchar(120) NOT NULL,
+    calorias_totais int NOT NULL,
     PRIMARY KEY (id)
 );
 CREATE TABLE ingredientes (

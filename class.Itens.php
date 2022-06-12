@@ -12,6 +12,7 @@ class Itens implements CRUD {
     private $id;
     private $descricao = "";
     private $ingredientes = [];
+    private $calorias_totais;
 
     function __toString(){
         return json_encode([
@@ -47,7 +48,7 @@ class Itens implements CRUD {
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $db->query("START TRANSACTION;");
-            
+
             $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
             
             $consulta->execute([':descricao' => $this->descricao]);
@@ -63,6 +64,19 @@ class Itens implements CRUD {
                     ':idIngrediente' => $idIngrediente
                 ]);
             }
+
+            $consulta = $db->prepare("SELECT SUM(calorias) AS calorias_totais FROM ingredientes INNER JOIN itens_ingrediente ON itens_ingredientes.id_item = itens.id WHERE id_item = :id");
+            $consulta->execute([
+                ":id" => $this->id
+            ]);
+            $data = $consulta->fetch(PDO::FETCH_ASSOC);
+            $this->calorias_totais = $data['calorias_totais'];
+
+            $consulta = $db->prepare("UPDATE itens SET calorias_totais = :calorias_totais WHERE id = :id");
+            $consulta->execute([
+                ":id" => $this->id,
+                ":calorias_totais" => $this->calorias_totais
+            ]); // se não funcionar, talvez tenhamos q tirar o NOT NULL das calorias_totais
             $db->query("COMMIT;");
 
         }catch(PDOException $e){
