@@ -2,13 +2,19 @@
 
     require "classUsuario.php";
 
+try{
     $id = $_GET["id"];
 
-    $u = Usuario::findbyPk($id);
-    if (!$u){
+    $usu = Usuario::findbyPk($id);
+    if (!$usu){
         throw new Exception("Usuário não encontrado");
     }
-    $u->remover();
-    print $u;
-
+    $usu->remover();
+    print $usu;
+}catch(Exception $e){
+    print json_encode([
+        "error" => true,
+        "message" => $e->getMessage()
+    ]);
+}
 ?>

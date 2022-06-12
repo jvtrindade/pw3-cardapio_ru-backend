@@ -2,14 +2,20 @@
 
     require "classNutricionista.php";
 
-    $crn = $_GET["crn"];
+try{
+    $id = $_GET["id"];
 
-    $n = Nutricionista::findbyPk($crn);
-    if (!$n){
-        throw new Exception ("Usuário não encontrado!");
+    $nut = Nutricionista::findbyPk($id);
+    if (!$nut){
+        throw new Exception ("Nutricionista não encontrado!");
     }
-    $n->remover();
+    $nut->remover();
     
     header('location: ../frontend/privado/index.php');
-
+}catch(Exception $e){
+    print json_encode([
+        "error" => true,
+        "message" => $e->getMessage()
+    ]);
+}
 ?>

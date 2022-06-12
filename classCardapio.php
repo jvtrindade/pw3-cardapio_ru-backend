@@ -13,7 +13,7 @@
         private $data;
         private $tipo;
         private $itens = [];
-        private $crn_nutricionista = "";
+        private $id_nutricionista;
 
         function __toString(){
             return json_encode([
@@ -21,7 +21,7 @@
                 "data" => $this->data,
                 "tipo" => $this->tipo,
                 "itens" => $this->itens,
-                "crn_nutricionista" => $this->crn_nutricionista
+                "id_nutricionista" => $this->id_nutricionista
             ]);
         }
 
@@ -55,12 +55,12 @@
             }
         }
 
-        function setCrn_nutricionista($valor){
-            $this->crn_nutricionista = $valor;
+        function setId_nutricionista($valor){
+            $this->id_nutricionista = $valor;
         }
 
-        function getCrn_nutricionista(){
-            return $this->crn_nutricionista;
+        function getId_nutricionista(){
+            return $this->id_nutricionista;
         }
     
 
@@ -70,26 +70,32 @@
             $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $db->query("START TRANSACTION;");
 
-            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, crn_nutricionista) VALUES (:dia, :tipo, :crn_nutricionista");
+            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, id_nutricionista) VALUES (:dia, :tipo, :id_nutricionista");
 
             $consulta->execute([
                 ':dia' => $this->data,
                 ':tipo' => $this->tipo,
-                ':crn_nutricionista' => $this->crn_nutricionista
+                ':id_nutricionista' => $this->id_nutricionista
             ]);
 
             $consulta = $db->prepare("SELECT id FROM cardapios ORDER BY id DESC LIMIT 1");
             $consulta->execute();
-            $data = $consulta->fetch(PDO::FETCH_ASSOC);
-            $this->id = $data['id'];
+            $dados = $consulta->fetch(PDO::FETCH_ASSOC);
+            $this->id = $dados['id'];
 
             foreach($this->itens as $idItem){
                 $consulta = $db->prepare("INSERT INTO itens_cardapios (id_item, id_cardapio) VALUES (:idItem, :idCardapio);");
                 $consulta->execute([
                     ':idItem' => $idItem,
-                    'idCardapio' => $this->id
+                    ':idCardapio' => $this->id
                 ]);
             }
+
+            $consulta = $db->prepare("INSERT INTO nutricionistas_cardapios (id_nutricionista, id_cardapio) VALUES (:idNutricionista, :idCardapio);");
+            $consulta->execute([
+                ':idNutricionista' => $this->id_nutricionista,
+                ':idCardapio' => $this->id
+            ]);
             $db->query("COMMIT;");
         }catch(PDOException $e){
             $db->query("ROLLBACK;");
@@ -102,12 +108,12 @@
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
             $db->query("START TRANSACTION;");
-            $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, crn_nutricionsita = :crn_nutricionista WHERE id= :id");
+            $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, id_nutricionsita = :id_nutricionista WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
                 ':dia' => $this->data,
                 ':tipo' => $this->tipo,
-                ':crn_nutricionista' => $this->crn_nutricionista
+                ':id_nutricionista' => $this->id_nutricionista
             ]);
 
             $consulta = $db->prepare("DELETE FROM itens_cardapios WHERE id_cardapio = :idCardapio");
@@ -116,10 +122,18 @@
             foreach($this->itens as $idItem){
                 $consulta = $db->prepare("INSERT INTO itens_cardapios (id_item, id_cardapio) values (:idItem, :idCardapio);");
                 $consulta->execute([
-                    ":idItem" => $this->idItem,
+                    ":idItem" => $idItem,
                     ":idCardapio" => $this->id
                 ]);
             }
+
+            $consulta = $db->prepare("DELETE FROM nutricionistas_cardapios WHERE id_cardapio = :idCardapio");
+            $consulta->execute([':idCalendario' => $this->id]);
+            $consulta = $db->prepare("INSERT INTO nutricionistas_cardapios (id_nutricionistas, id_cardapio) values (:idNutricionista, :idCardapio);");
+            $consulta->execute([
+                ":idNutricionista" => $this->id_nutricionista,
+                ":idCardapio" => $this->id
+            ]);
 
             $db->query("COMMIT;");
         }catch(PDOException $e){
@@ -140,6 +154,9 @@
 
             $consulta = $db->prepare("DELETE FROM cardapios WHERE id=:id");
             $consulta->execute([':id' => $this->id]);
+
+            $consulta = $db->prepare("DELETE FROM nutricionistas_cardapios WHERE id_cardapio = :idCardapio;");
+            $consulta->execute([':idCalendario' => $this->id]);
             $db->query("COMMIT;");
         }catch(PDOException $e){
             $db->query("ROLLBACK;");

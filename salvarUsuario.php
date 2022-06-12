@@ -3,12 +3,12 @@
     require "classUsuario.php";
 
     try{
-        $u = new Usuario();
-        $u->setNome($_POST["nome"]);
-        $u->setEmail($_POST["email"]);
-        $u->setSenha($_POST["senha"]);
-        $u->inserir();
-        print $u;
+        $usu = new Usuario();
+        $usu->setNome($_POST["nome"]);
+        $usu->setEmail($_POST["email"]);
+        $usu->setSenha($_POST["senha"]);
+        $usu->inserir();
+        print $usu;
     }
     catch(Exception $e){
         print json_encode([

@@ -82,7 +82,7 @@ class Itens implements CRUD {
                 ':descricao' => $this->descricao
             ]);
 
-            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_item = :idItem;");
+            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_item = :idItem;"); // acho q esse trecho n precisa, pois o ID segue o msm
             $consulta->execute([':idItem' => $this->id]);
 
             //throw new Exception("erro");
@@ -112,6 +112,9 @@ class Itens implements CRUD {
 
             $consulta = $db->prepare("DELETE FROM itens WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
+
+            $consulta = $db->prepare("DELETE FROM itens_cardapios WHERE id_item = :idItem;");
+            $consulta->execute([':idItem' => $this->id]);
             $db->query("COMMIT;");
         }catch(PDOException $e){
             $db->query("ROLLBACK;");

@@ -2,15 +2,21 @@
 
     require "classNutricionista.php";
 
-    $crn = $_GET["crn"];
+try{
+    $id = $_GET["id"];
 
-    $n = Nutricionista::findbyPk($crn); //perguntar pro Professor o que significa os ::
-    if(!$p){
+    $nut = Nutricionista::findbyPk($id);
+    if(!$nut){
         throw new Exception("Usuário não encontrado!");
     }
-    $n->setCRN($_POST["crn"]);
-    $n->setNome($_POST["nome"]);
-    $n->alterar();
-    print $n;
-    
+    $nut->setCRN($_POST["crn"]);
+    $nut->setNome($_POST["nome"]);
+    $nut->alterar();
+    print $nut;
+}catch(Exception $e){
+    print json_encode([
+        "error" => true,
+        "message" => $e->getMessage()
+    ]);
+}
 ?>

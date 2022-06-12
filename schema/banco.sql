@@ -20,16 +20,17 @@ CREATE TABLE itens_ingredientes (
     PRIMARY KEY (id_item, id_ingrediente)
 );
 CREATE TABLE nutricionistas (
+    id int AUTO_INCREMENT NOT NULL,
 	crn varchar(10) NOT NULL,
     nome varchar (120) NOT NULL,
-    PRIMARY KEY (crn)
+    PRIMARY KEY (id)
 );
 CREATE TABLE cardapios (
 	id int AUTO_INCREMENT NOT NULL,
     dia DATE NOT NULL,
     tipo int NOT NULL,
-    crn_nutricionista varchar(10) NOT NULL,
-    FOREIGN KEY (crn_nutricionista) REFERENCES nutricionistas(crn),
+    id_nutricionista varchar(10) NOT NULL,
+    FOREIGN KEY (id_nutricionista) REFERENCES nutricionistas(id),
     PRIMARY KEY (id)
 );
 CREATE TABLE itens_cardapios (
@@ -38,6 +39,13 @@ CREATE TABLE itens_cardapios (
     FOREIGN KEY (id_item) REFERENCES itens(id),
     FOREIGN KEY (id_cardapio) REFERENCES cardapios(id),
     PRIMARY KEY (id_item, id_cardapio)
+);
+CREATE TABLE nutricionistas_cardapios (
+	id_nutricionista int NOT NULL,
+    id_cardapio int NOT NULL,
+    FOREIGN KEY (id_nutricionista) REFERENCES nutricionistas(id),
+    FOREIGN KEY (id_cardapio) REFERENCES cardapios(id),
+    PRIMARY KEY (id_nutricionista, id_cardapio)
 );
 CREATE TABLE usuarios (
 	id int AUTO_INCREMENT NOT NULL,

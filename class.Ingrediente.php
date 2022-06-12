@@ -77,11 +77,18 @@ function inserir(){
     }
 
     function remover(){
+        $db = null;
         try {
             $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db->query("START TRANSACTION;");
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id]);
+
+            $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_ingrediente= :id");
+            $consulta->execute([':id' => $this->id]);
+            $db->query("COMMIT;");
         }catch(PDOException $e){
+            $db->query("ROLLBACK;");
             die($e->getMessage());
         }
     }

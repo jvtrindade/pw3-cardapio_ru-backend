@@ -1,4 +1,6 @@
 <?php
+    require_once dirname(__FILE__). "/interface.CRUD.php";
+
     require __DIR__ . '/vendor/autoload.php';
 
     use Dotenv\Dotenv;
@@ -8,24 +10,22 @@
 
     class Nutricionista{
 
-        const DBNAME = "ru";
-        const USER = "aluno";
-        const PASSWORD = "aluno";
-
+        private $id;
         private $crn = "";
         private $nome = "";
 
         function __toString(){
             return json_encode([
+                "id" => $this->id,
                 "crn" => $this->crn,
-                "nome" => $this->nome,
+                "nome" => $this->nome
             ]);
         }
 
-        static function findbyPk($crn){
+        static function findbyPk($id){
             $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-            $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE crn=:crn");
-            $consulta->execute([":crn" => $crn]);
+            $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE id=:id");
+            $consulta->execute([":id" => $id]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Nutricionista');
             return $consulta->fetch();
         }
@@ -46,33 +46,25 @@
         function inserir(){
             try {
                 $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-                //$consulta = $db->prepare("BEGIN TRANSACTION;");
                 $consulta = $db->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome)");
-                // ////////SELECT
-                // INSERT INTO Itens_Ingredientes (id_item, id_ingrediente) VALUES ();
-                // commit;
-                // ");
                 $consulta->execute([
                     ':crn' => $this->crn,
                     ':nome' => $this->nome
                 ]);
-                //$consulta = $db->prepare("SELECT id FROM itens ORDER BY id DESC LIMIT 1");
-                //$consulta->execute();
-                //$data = $consulta->fetch(PDO::FETCH_ASSOC);
-                //$this->id = $data['id'];
-    
+                $consulta = $db->prepare("SELECT id FROM nutricionistas ORDER BY id DESC LIMIT 1");
+                $consulta->execute();
+                $data = $consulta->fetch(PDO::FETCH_ASSOC);
+                $this->id = $data['id'];
             }catch(PDOException $e){
                 throw new Exception("Ocorreu um erro interno");
-                //$consultar = $db->prepare("Rollback;");
-                //$consultar->execute();
                 
             }
         }
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-                $consulta = $database->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
+                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $consulta = $db->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
@@ -84,12 +76,19 @@
         }
 
         function remover(){
+            $db = null;
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
-                $consulta = $database->prepare("DELETE FROM nutricionistas where crn = :crn");
-                $consulta->execute([":crn" => $this->crn]);
+                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $db->query("START TRANSACTION;");
+                $consulta = $db->prepare("DELETE FROM nutricionistas where id = :id");
+                $consulta->execute([":id" => $this->id]);
+
+                $consulta = $db->prepare("DELETE FROM nutricionistas_cardapios where id_nutricionista = :id");
+                $consulta->execute([":id" => $this->id]);
+                $db->query("COMMIT;");
             }
             catch(PDOException $e){
+                $db->query("ROLLBACK;");
                 die($e->getMessage());
             }
         }

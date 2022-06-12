@@ -8,10 +8,6 @@ $dotenv->load();
 
     class Usuario{
 
-        const DBNAME = "ru";
-        const USER = "aluno";
-        const PASSWORD = "aluno";
-
         private $id;
         private $nome = "";
         private $email = "";

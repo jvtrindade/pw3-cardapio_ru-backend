@@ -11,11 +11,11 @@
         //         print json_encode("Nutricionista já cadastrado(a)");
         //     }
         // }
-        $n = new Nutricionista();
-        $n->setCRN($_POST["crn"]);
-        $n->setNome($_POST["nome"]);
-        $n->inserir();
-        print $n;
+        $nut = new Nutricionista();
+        $nut->setCRN($_POST["crn"]);
+        $nut->setNome($_POST["nome_nutricionista"]);
+        $nut->inserir();
+        print $nut;
     }
     catch(Exception $e){
         print json_encode([

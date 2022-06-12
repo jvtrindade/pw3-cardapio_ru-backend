@@ -5,7 +5,7 @@ try {
     $car = new Cardapio();
     $car->setData($_POST['data']);
     $car->setTipo($_POST['tipo']);
-    $car->setCrn_nutricionista($_POST['nutricionista']);
+    $car->setId_nutricionista($_POST['nutricionista']);
     $car->setItens($_POST['item_refeicao']);
     $car->inserir();
     print $c;
