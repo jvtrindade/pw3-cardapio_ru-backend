@@ -2,10 +2,10 @@
 require_once dirname(__FILE__). "/interface.CRUD.php";
 require __DIR__ . '/vendor/autoload.php';
 
-use Dotenv\Dotenv;
+// use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// $dotenv = Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
 
 class Ingredientes implements CRUD{
 
@@ -20,7 +20,8 @@ class Ingredientes implements CRUD{
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+        // $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+        $database = new PDO("mysql:host=localhost;dbname=RU", "root", "");
         $consulta = $database->prepare("SELECT * FROM ingredientes WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Ingredientes');
@@ -44,7 +45,8 @@ class Ingredientes implements CRUD{
 function inserir(){
     $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            // $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = new PDO("mysql:host=localhost;dbname=RU", "root", "");
             $consulta = $db->prepare("INSERT INTO ingredientes (descricao, calorias) VALUES(:descricao_ingrediente, :calorias)");
             $consulta->execute([
                 ':descricao_ingrediente' => $this->descricao,
@@ -64,7 +66,8 @@ function inserir(){
     function alterar(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            // $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = new PDO("mysql:host=localhost;dbname=RU", "root", "");
             $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
@@ -79,7 +82,8 @@ function inserir(){
     function remover(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            // $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = new PDO("mysql:host=localhost;dbname=RU", "root", "");
             $db->query("START TRANSACTION;");
             $consulta = $db->prepare("DELETE FROM ingredientes WHERE id= :id");
             $consulta->execute([':id' => $this->id]);

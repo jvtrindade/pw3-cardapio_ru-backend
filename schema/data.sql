@@ -5,4 +5,4 @@ INSERT INTO usuarios (nome, email, senha) VALUES ("Juan Álvaro Córdova", "juan
 INSERT INTO usuarios (nome, email, senha) VALUES ("Júlia Conzatti", "juliarconzatti@gmail.com", "grupoajjjj");
 INSERT INTO ingredientes (descricao, calorias) VALUES ("Tomate", "50");
 INSERT INTO nutricionistas (crn, nome) VALUES ("12345678", "Rejane");
-INSERT INTO cardapios (dia, tipo, crn_nutricionista) VALUES (2020-10-10, 1, "12345678");
+INSERT INTO cardapios (dia, tipo, id_nutricionista) VALUES (2020-10-10, 1, "1");

@@ -35,6 +35,7 @@ try {
         "error" => true,
         "message" => $e->getMessage()
     ]);
+    print $e;
 }
 
 ?>
