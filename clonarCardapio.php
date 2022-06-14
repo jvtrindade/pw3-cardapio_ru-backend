@@ -21,11 +21,17 @@
         ]);
         $dados = $consulta->fetch(PDO::FETCH_ASSOC);
 
+        $consulta = $db->prepare("SELECT id_itens FROM itens_cardapios WHERE id_cardapio = :id_cardapio");
+        $consulta->execute([
+            ":id_cardapio" => $cardapio_recebido
+        ]);
+        $itens = $consulta->fetch(PDO::FETCH_ASSOC);
+
         $car = new Cardapio();
         $car->setData($nova_data);
         $car->setTipo($dados["tipo"]);
         $car->setId_nutricionista($dados["id_nutricionista"]);
-        $car->setItens($_POST['item_refeicao']);// ver isso
+        $car->setItens($itens);
         $car->inserir();
         print $c;
         $db->query("COMMIT;");
