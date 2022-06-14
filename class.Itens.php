@@ -67,7 +67,7 @@ class Itens implements CRUD {
                 ]);
             }
 
-            $consulta = $db->prepare("SELECT SUM(calorias) AS calorias_totais FROM ingredientes INNER JOIN itens_ingrediente ON itens_ingredientes.id_item = itens.id WHERE id_item = :id");
+            $consulta = $db->prepare("SELECT SUM(calorias) AS calorias_totais FROM ingredientes INNER JOIN itens_ingredientes ON itens_ingredientes.id_item = itens.id WHERE id_item = :id");
             $consulta->execute([
                 ":id" => $this->id
             ]);
