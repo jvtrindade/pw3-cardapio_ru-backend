@@ -8,7 +8,7 @@ try{
     if (!$car){
         throw new Exception ("Cardápio não encontrado!");
     }
-    $car->removerCardapio();
+    $car->remover();
     header('location: ../frontend/privado/index.php');
 }catch(Exception $e){
     print json_encode([

@@ -8,7 +8,7 @@ try{
     if (!$ing){
         throw new Exception ("Ingrediente não encontrado!");
     }
-    $ing->removerIngredientes();
+    $ing->remover();
     header('location: ../frontend/privado/index.php');
 }catch(Exception $e){
     print json_encode([
