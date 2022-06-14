@@ -39,6 +39,7 @@ class Itens implements CRUD {
     }
 
     function setIngredientes($ingredientes){
+        $ingredientes = explode(",", $ingredientes[0]);
         foreach($ingredientes as $ingrediente) {
             $this->ingredientes[] = +$ingrediente;
         }
