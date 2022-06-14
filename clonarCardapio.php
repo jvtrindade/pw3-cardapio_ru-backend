@@ -33,7 +33,7 @@
         $car->setId_nutricionista($dados["id_nutricionista"]);
         $car->setItens($itens);
         $car->inserir();
-        print $c;
+        print $car;
         $db->query("COMMIT;");
 
     }catch(Exception $e){

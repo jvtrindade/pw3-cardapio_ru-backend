@@ -35,6 +35,7 @@
             $consulta->execute([]);
             $consulta->setFetchMode(PDO::FETCH_ASSOC);
             $data = $consulta->fetchAll();
+            return $data;
 
             // foreach($data as $d){
             //     $consulta = $database->prepare("SELECT i.descricao from itens_cardapios ic inner join itens i on ic.id_item = i.id");
