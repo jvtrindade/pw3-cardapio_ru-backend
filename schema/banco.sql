@@ -28,7 +28,7 @@ CREATE TABLE nutricionistas (
 );
 CREATE TABLE cardapios (
 	id int AUTO_INCREMENT NOT NULL,
-    dia DATE NOT NULL,
+    `data` DATE NOT NULL,
     tipo int NOT NULL,
     id_nutricionista INT NOT NULL,
     FOREIGN KEY (id_nutricionista) REFERENCES nutricionistas(id),

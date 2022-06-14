@@ -8,7 +8,7 @@ try {
     $car->setId_nutricionista($_POST['nutricionista']);
     $car->setItens($_POST['item_refeicao']);
     $car->inserir();
-    print $c;
+    print $car;
 }catch(Exception $e){
     print json_encode([
         "error" => true,

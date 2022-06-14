@@ -1,11 +1,7 @@
 <?php
+    require_once dirname(__FILE__) . "/class.DB.php";
     require_once dirname(__FILE__). "/interface.CRUD.php";
     require __DIR__ . '/vendor/autoload.php';
-
-    use Dotenv\Dotenv;
-
-    /* $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load(); */
 
     class Cardapio implements CRUD{
 
@@ -26,15 +22,41 @@
         }
 
         static function findbyPk($id){
-            $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $database = DB::getInstance();
             $consulta = $database->prepare("SELECT * FROM cardapios WHERE id=:id");
-            $consulta->execute([":id => $id"]);
-            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Cardapios');
+            $consulta->execute([":id" => $id]);
+            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Cardapio');
             return $consulta->fetch();
+        }
+
+        static function findAll(){
+            $database = DB::getInstance();
+            $consulta = $database->prepare("SELECT c.id, c.data, c.tipo, n.nome as nutricionista FROM cardapios c inner join nutricionistas n on c.id_nutricionista = n.id");
+            $consulta->execute([]);
+            $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $data = $consulta->fetchAll();
+
+            // foreach($data as $d){
+            //     $consulta = $database->prepare("SELECT i.descricao from itens_cardapios ic inner join itens i on ic.id_item = i.id");
+            //     $consulta->execute([]);
+            //     $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            //     $itens[] = $consulta->FetchAll();
+            // }
+
+            // foreach($data as $d){
+            //     $consulta = $database->prepare("SELECT i.descricao from itens_ingredientes ii inner join ingredientes i on ii.id_ingrediente = i.id");
+            //     $consulta->execute([]);
+            //     $consulta->setFetchMode(PDO::FETCH_ASSOC);
+            //     $ingredientes[] = $consulta->FetchAll();
+            // }
         }
 
         function setData($valor){
             $this->data = $valor;
+        }
+
+        function getId(){
+            return $this->id;
         }
 
         function getData(){
@@ -66,18 +88,21 @@
 
     function inserir(){
         $db = null;
+
+        
         try{
             $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            
             $db->query("START TRANSACTION;");
 
-            $consulta = $db->prepare("INSERT INTO cardapios(dia, tipo, id_nutricionista) VALUES (:dia, :tipo, :id_nutricionista");
+            $consulta = $db->prepare("INSERT INTO cardapios(data, tipo, id_nutricionista) VALUES (:data, :tipo, :id_nutricionista)");
 
             $consulta->execute([
-                ':dia' => $this->data,
+                ':data' => $this->data,
                 ':tipo' => $this->tipo,
                 ':id_nutricionista' => $this->id_nutricionista
             ]);
-
+            
             $consulta = $db->prepare("SELECT id FROM cardapios ORDER BY id DESC LIMIT 1");
             $consulta->execute();
             $dados = $consulta->fetch(PDO::FETCH_ASSOC);
@@ -96,8 +121,12 @@
                 ':idNutricionista' => $this->id_nutricionista,
                 ':idCardapio' => $this->id
             ]);
+
+            
             $db->query("COMMIT;");
+            
         }catch(PDOException $e){
+            var_dump($db->errorInfo());
             $db->query("ROLLBACK;");
             throw new Exception("Ocorreu um erro interno");
         }
