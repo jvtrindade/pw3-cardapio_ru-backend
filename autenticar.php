@@ -22,14 +22,11 @@
         header ("Location: ../frontend/privado/index.php");
     }*/
     require __DIR__ . '/vendor/autoload.php';
-    use Dotenv\Dotenv;
+   
 
-    $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-
-    $USER = $_ENV['DB_USER'];
-    $PASSWORD = $_ENV['DB_PASSWORD'];
-    $DBNAME = $_ENV['DB_NAME'];
+    $USER = 'aluno';
+    $PASSWORD = 'aluno';
+    $DBNAME = 'ru';
 
     require __DIR__ . "/key.php";
     use Firebase\JWT\JWT;
