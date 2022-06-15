@@ -41,7 +41,7 @@
                 $consulta = $database->prepare("SELECT i.descricao from itens_cardapios ic inner join itens i on ic.id_item = i.id");
                 $consulta->execute([]);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
-                $itens[] = $consulta->fetchAll();
+                $itens = $consulta->fetchAll();
                 return $itens;
                 
             }
@@ -50,7 +50,7 @@
                 $consulta = $database->prepare("SELECT i.descricao from itens_ingredientes ii inner join ingredientes i on ii.id_ingrediente = i.id");
                 $consulta->execute([]);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
-                $ingredientes[] = $consulta->fetchAll();
+                $ingredientes = $consulta->fetchAll();
                 return $ingredientes;
             }
         }
