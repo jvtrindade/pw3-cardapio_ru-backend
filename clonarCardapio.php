@@ -12,7 +12,6 @@
     }
     $db = null;
     try{
-        // $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
         $db = DB::getInstance();
         $db->query("START TRANSACTION;");
         $consulta = $db->prepare("SELECT * FROM cardapios WHERE id= :id LIMIT 1");
