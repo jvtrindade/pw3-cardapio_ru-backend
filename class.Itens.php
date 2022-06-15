@@ -1,11 +1,7 @@
 <?php
 require_once dirname(__FILE__). "/interface.CRUD.php";
 require __DIR__ . '/vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+require_once dirname(__FILE__) . "/class.DB.php";
 
 class Itens implements CRUD {
 
@@ -23,7 +19,7 @@ class Itens implements CRUD {
     }
 
     static function findbyPk($id){
-        $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+        $database = DB::getInstance();
         $consulta = $database->prepare("SELECT * FROM itens WHERE id=:id");
         $consulta->execute([":id" => $id]);
         $consulta->setFetchMode(PDO::FETCH_CLASS, 'Itens');
@@ -47,7 +43,7 @@ class Itens implements CRUD {
     function inserir(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             $db->query("START TRANSACTION;");
 
             $consulta = $db->prepare("INSERT INTO itens (descricao) VALUES (:descricao)");
@@ -89,7 +85,7 @@ class Itens implements CRUD {
     function alterar(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             $db->query("START TRANSACTION;");
             $consulta = $db->prepare("UPDATE itens SET descricao = :descricao WHERE id= :id");
             $consulta->execute([
@@ -119,7 +115,7 @@ class Itens implements CRUD {
     function remover(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             $db->query("START TRANSACTION;");
 
             $consulta = $db->prepare("DELETE FROM itens_ingredientes WHERE id_item = :idItem;");

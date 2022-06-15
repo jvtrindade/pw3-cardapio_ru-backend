@@ -37,19 +37,20 @@
             $data = $consulta->fetchAll();
             return $data;
 
-            // foreach($data as $d){
-            //     $consulta = $database->prepare("SELECT i.descricao from itens_cardapios ic inner join itens i on ic.id_item = i.id");
-            //     $consulta->execute([]);
-            //     $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            //     $itens[] = $consulta->FetchAll();
-            // }
+            foreach($data as $d){
+                $consulta = $database->prepare("SELECT i.descricao from itens_cardapios ic inner join itens i on ic.id_item = i.id");
+                $consulta->execute([]);
+                $consulta->setFetchMode(PDO::FETCH_ASSOC);
+                $itens[] = $consulta->FetchAll();
+                
+            }
 
-            // foreach($data as $d){
-            //     $consulta = $database->prepare("SELECT i.descricao from itens_ingredientes ii inner join ingredientes i on ii.id_ingrediente = i.id");
-            //     $consulta->execute([]);
-            //     $consulta->setFetchMode(PDO::FETCH_ASSOC);
-            //     $ingredientes[] = $consulta->FetchAll();
-            // }
+            foreach($data as $d){
+                $consulta = $database->prepare("SELECT i.descricao from itens_ingredientes ii inner join ingredientes i on ii.id_ingrediente = i.id");
+                $consulta->execute([]);
+                $consulta->setFetchMode(PDO::FETCH_ASSOC);
+                $ingredientes[] = $consulta->FetchAll();
+            }
         }
 
         function setData($valor){
@@ -92,7 +93,7 @@
 
         
         try{
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             
             $db->query("START TRANSACTION;");
 
@@ -136,7 +137,7 @@
     function alterar(){
         $db = null;
         try {
-            $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             $db->query("START TRANSACTION;");
             $consulta = $db->prepare("UPDATE cardapios SET dia = :dia, tipo = :tipo, id_nutricionsita = :id_nutricionista WHERE id= :id");
             $consulta->execute([
@@ -176,7 +177,7 @@
     function remover(){
         $db = null;
         try {
-            $db = new PDO("mysql;host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $db = DB::getInstance();
             $db->query("START TRANSACTION;");
 
             $consulta = $db->prepare("DELETE FROM itens_cardapios WHERE id_cardapio = :idCardapio;");
@@ -196,7 +197,7 @@
 
     function mostrarCardapio(){
 
-        $db = new PDO("mysql;host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+        $db = DB::getInstance();
     
         if($this->id !== null && $this->id != ''){
     

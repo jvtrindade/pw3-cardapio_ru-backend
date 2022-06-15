@@ -21,19 +21,14 @@
     else{
         header ("Location: ../frontend/privado/index.php");
     }*/
+    require_once dirname(__FILE__) . "/class.DB.php";
     require __DIR__ . '/vendor/autoload.php';
-   
-
-    $USER = 'aluno';
-    $PASSWORD = 'aluno';
-    $DBNAME = 'ru';
-
     require __DIR__ . "/key.php";
     use Firebase\JWT\JWT;
     use Firebase\JWT\Key;
     $usuario = $_POST['email'];
     $senha = $_POST['senha'];
-    $database = new PDO("mysql:localhost=host;dbname=" . $DBNAME, $USER, $PASSWORD);
+    $database = DB::getInstance();
     try {
         
         $consulta = $database->prepare("SELECT id, nome FROM usuarios WHERE email=:email and senha =:senha");

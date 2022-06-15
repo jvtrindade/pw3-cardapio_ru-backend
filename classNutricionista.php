@@ -1,12 +1,7 @@
 <?php
     require_once dirname(__FILE__). "/interface.CRUD.php";
-
+    require_once dirname(__FILE__) . "/class.DB.php";
     require __DIR__ . '/vendor/autoload.php';
-
-    use Dotenv\Dotenv;
-    
-    $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
 
     class Nutricionista{
 
@@ -23,7 +18,7 @@
         }
 
         static function findbyPk($id){
-            $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $database = DB::getInstance();
             $consulta = $database->prepare("SELECT * FROM nutricionistas WHERE id=:id");
             $consulta->execute([":id" => $id]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Nutricionista');
@@ -45,7 +40,7 @@
 
         function inserir(){
             try {
-                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $db = DB::getInstance();
                 $consulta = $db->prepare("INSERT INTO nutricionistas(crn, nome) VALUES (:crn, :nome)");
                 $consulta->execute([
                     ':crn' => $this->crn,
@@ -63,7 +58,7 @@
 
         function alterar(){
             try{
-                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $db = DB::getInstance();
                 $consulta = $db->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
                 $consulta->execute([
                     ":crn" => $this->crn,
@@ -78,7 +73,7 @@
         function remover(){
             $db = null;
             try{
-                $db = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $db = DB::getInstance();
                 $db->query("START TRANSACTION;");
                 $consulta = $db->prepare("DELETE FROM nutricionistas where id = :id");
                 $consulta->execute([":id" => $this->id]);

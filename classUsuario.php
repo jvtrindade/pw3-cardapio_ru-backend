@@ -1,10 +1,7 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+require_once dirname(__FILE__) . "/class.DB.php";
+require __DIR__ . '/interface.CRUD.php';
 
     class Usuario{
 
@@ -23,7 +20,7 @@ $dotenv->load();
         }
 
         static function findbyPk ($id){
-            $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+            $database = DB::getInstance();
             $consulta = $database->prepare("SELECT * FROM usuarios WHERE id=:id");
             $consulta->execute([":id" => $id]);
             $consulta->setFetchMode(PDO::FETCH_CLASS, "Usuario");
@@ -51,7 +48,7 @@ $dotenv->load();
 
         function inserir(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $database = DB::getInstance();
                 $consulta = $database->prepare("INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)");
                 $consulta->execute([
                     ":nome" => $this->nome,
@@ -70,7 +67,7 @@ $dotenv->load();
 
         function alterar(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $database = DB::getInstance();
                 $consulta = $database->prepare("UPDATE usuarios SET nome = :nome, email = :email, senha = :senha WHERE id = :id");
                 $consulta->execute([
                     ":id" => $this->id,
@@ -86,7 +83,7 @@ $dotenv->load();
 
         function remover(){
             try{
-                $database = new PDO("mysql:host=localhost;dbname=" . $_ENV['DB_NAME'], $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
+                $database = DB::getInstance();
                 $consulta = $database->prepare("DELETE FROM usuarios WHERE id = :id");
                 $consulta->execute([":id" => $this->id]);
             }

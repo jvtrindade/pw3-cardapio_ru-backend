@@ -1,23 +1,10 @@
 <?php // precisa de vários foreach ou só um?
 
 require __DIR__ . '/vendor/autoload.php';
-use Dotenv\Dotenv;
-
-/* $dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load(); */
-
-/* $USER = $_ENV['DB_USER'];
-$PASSWORD = $_ENV['DB_PASSWORD'];
-$DBNAME = $_ENV['DB_NAME']; */
-
-$DBNAME = 'ru';
-$USER = 'root';
-$PASSWORD = '';
-
-
+require_once dirname(__FILE__) . "/class.DB.php";
 
     try{
-        $database =new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
+        $database = DB::getInstance();
         $itens = [];
         $ingredientes = [];
         $cardapios = [];

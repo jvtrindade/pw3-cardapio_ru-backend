@@ -5,16 +5,9 @@
     $item = $_POST["item"];
 
     require __DIR__ . '/vendor/autoload.php';
-    use Dotenv\Dotenv;
-
-    $dotenv = Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-
-    $USER = $_ENV['DB_USER'];
-    $PASSWORD = $_ENV['DB_PASSWORD'];
-    $DBNAME = $_ENV['DB_NAME'];
+    require_once dirname(__FILE__) . "/class.DB.php";
     
-    $database = new PDO("mysql:host=localhost;dbname=" . $DBNAME, $USER, $PASSWORD);
+    $database = DB::getInstance();
 
 
     $busca = [];
