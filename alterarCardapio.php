@@ -10,7 +10,7 @@ try {
         throw new Exception("Cardápio não encontrado!");
     }
     $car->setId($_POST["id"]);
-    $car->setDia($_POST["dia"]);
+    $car->setData($_POST["dia"]);
     $car->setTipo($_POST["tipo"]);
     $car->setItens($_POST["item_refeicao"]);
     $car->setId_nutricionista($_POST["crn_nutricionista"]);//ver o nome aqui

@@ -18,7 +18,7 @@
     }
 
     if (isset($dia)){
-        $busca[] = 'dia=:dia';
+        $busca[] = 'data=:dia';
         $ex[':dia'] =  $dia;
     }
 
