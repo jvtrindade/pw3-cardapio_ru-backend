@@ -62,18 +62,18 @@ class Itens implements CRUD {
                 ]);
             }
 
-            $consulta = $db->prepare("SELECT SUM(calorias) AS calorias_totais FROM ingredientes INNER JOIN itens_ingredientes ON itens_ingredientes.id_item = itens.id WHERE id_item = :id");
-            $consulta->execute([
-                ":id" => $this->id
-            ]);
-            $data = $consulta->fetch(PDO::FETCH_ASSOC);
-            $this->calorias_totais = $data['calorias_totais'];
+            // $consulta = $db->prepare("SELECT SUM(calorias) AS calorias_totais FROM ingredientes INNER JOIN itens_ingredientes ON itens_ingredientes.id_item = itens.id WHERE id_item = :id");
+            // $consulta->execute([
+            //     ":id" => $this->id
+            // ]);
+            // $data = $consulta->fetch(PDO::FETCH_ASSOC);
+            // $this->calorias_totais = $data['calorias_totais'];
 
-            $consulta = $db->prepare("UPDATE itens SET calorias_totais = :calorias_totais WHERE id = :id");
-            $consulta->execute([
-                ":id" => $this->id,
-                ":calorias_totais" => $this->calorias_totais
-            ]); // se não funcionar, talvez tenhamos q tirar o NOT NULL das calorias_totais
+            // $consulta = $db->prepare("UPDATE itens SET calorias_totais = :calorias_totais WHERE id = :id");
+            // $consulta->execute([
+            //     ":id" => $this->id,
+            //     ":calorias_totais" => $this->calorias_totais
+            // ]); // se não funcionar, talvez tenhamos q tirar o NOT NULL das calorias_totais
             $db->query("COMMIT;");
 
         }catch(PDOException $e){
