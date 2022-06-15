@@ -35,6 +35,12 @@ class Ingredientes implements CRUD{
     function getCalorias(){
         return $this->calorias;
     }
+    function setId($valor){
+        $this->id = $valor;
+    }
+    function getId(){
+        return $this->id;
+    }
 
 
 function inserir(){
@@ -61,7 +67,7 @@ function inserir(){
         $db = null;
         try {
             $db = DB::getInstance();
-            $consulta = $db->prepare("UPDATE ingredientes SET descricao_ingrediente = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
+            $consulta = $db->prepare("UPDATE ingredientes SET descricao = :descricao_ingrediente, calorias = :calorias WHERE id= :id");
             $consulta->execute([
                 ':id' => $this->id,
                 ':descricao_ingrediente' => $this->descricao,
