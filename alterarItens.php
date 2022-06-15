@@ -9,7 +9,7 @@ try {
     if(!$itn){
         throw new Exception("Item não encontrado!");
     }
-    $itn->setDescricao($_POST["item-lista"]);
+    $itn->setDescricao($_POST["item_lista"]);
     $itn->setIngredientes($_POST['ingrediente_item_lista']);
     $itn->alterar();
     print $itn;
