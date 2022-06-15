@@ -59,8 +59,9 @@
         function alterar(){
             try{
                 $db = DB::getInstance();
-                $consulta = $db->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE crn = :crn");
+                $consulta = $db->prepare("UPDATE nutricionistas SET crn = :crn, nome = :nome WHERE id = :id");
                 $consulta->execute([
+                    ":id" => $this->id,
                     ":crn" => $this->crn,
                     ":nome" => $this->nome
                 ]);
