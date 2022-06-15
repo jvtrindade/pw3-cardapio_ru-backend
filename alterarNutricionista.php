@@ -9,8 +9,8 @@ try{
     if(!$nut){
         throw new Exception("Usuário não encontrado!");
     }
-    $nut->setCRN($_POST["crn"]);
-    $nut->setNome($_POST["nome"]);
+    $nut->setCRN($_POST["crn_lista"]);
+    $nut->setNome($_POST["nome_nutricionista_lista"]);
     $nut->alterar();
     print $nut;
 }catch(Exception $e){
