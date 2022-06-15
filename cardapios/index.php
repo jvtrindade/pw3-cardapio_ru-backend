@@ -19,7 +19,6 @@
         'JANTA' => []
     ];
 
-    var_dump($data);
     foreach($data as $d) {
         
         $resposta[getTipo($d['tipo'])][] = $d;
