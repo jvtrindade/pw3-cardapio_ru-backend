@@ -42,6 +42,7 @@
                 $consulta->execute([]);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $itens[] = $consulta->FetchAll();
+                return $itens;
                 
             }
 
@@ -50,6 +51,7 @@
                 $consulta->execute([]);
                 $consulta->setFetchMode(PDO::FETCH_ASSOC);
                 $ingredientes[] = $consulta->FetchAll();
+                return $ingredientes;
             }
         }
 
